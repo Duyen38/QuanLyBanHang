@@ -1,0 +1,70 @@
+﻿@model QuanLy.src.Abstractions.Data.KhachHang
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Thông tin về khách hàng</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HoTenKH)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HoTenKH)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DienThoai)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DienThoai)
+        </dd>
+        <dt class="col-sm-2">
+            Danh sách Hóa đơn
+        </dt>
+    </dl>
+</div>
+<div>
+    <p>Danh sách hóa đơn</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã hóa đơn</th>
+                <th>Mã nhân viên</th>
+                <th>Ngày lập hóa đơn</th>
+                <th>Ngày nhận hàng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var h in @Model.HoaDons)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="QuanLy" asp-action="Details" asp-controller="HoaDons" asp-route-id="h.MaHD">@h.MaHD</a>
+                    </td>
+                    <td>
+                        <a asp-area="QuanLy" asp-action="Details" asp-controller="NhanViens" asp-route-id="h.MaNV">@h.MaNV</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => h.NgayLapHD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => h.NgayNhanHang)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@Model.MaKH">Edit</a> |
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,200 @@
+﻿@model IEnumerable<QuanLy.src.Abstractions.Data.NhanVien>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+
+<h3>Danh sách nhân viên</h3>
+<p>
+    @*<a asp-area="QuanLy" asp-action="Create">Create New</a>*@
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
+        Create
+    </button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GioiTinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiaChi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DienThoai)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoNV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenNV)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.GioiTinh)*@
+                    @if (item.GioiTinh == true)
+                    {
+                        <p>Nữ</p>
+                    }
+                    else
+                    {
+                        <p>Nam</p>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DienThoai)
+                </td>
+                <td>
+                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaNV">Edit</a> |
+                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaNV">Details</a> |
+                    <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaNV">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Thêm nhân viên mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="MaNV" class="control-label"> Mã nhân viên </label>
+                                    <input id="MaNV" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="HoNV" class="control-label"> Họ </label>
+                                    <input id="HoNV" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="GioiTinh" class="control-label"> Giới tính </label>
+                                    <select class="form-control form-select" id="GioiTinh">
+                                        <option selected>Chọn</option>
+                                        <option value="True">Nữ</option>
+                                        <option value="False">Nam</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="DiaChi" class="control-label"> Địa chỉ </label>
+                                    <input id="DiaChi" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="TenNV" class="control-label"> Tên </label>
+                                    <input id="TenNV" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="NgaySinh" class="control-label"> Ngày sinh </label>
+                                    <input type="date" min="1990-01-01" max="2005-12-31" id="NgaySinh" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="DienThoai" class="control-label"> Điện thoại </label>
+                                    <input id="DienThoai" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnSave').click(function () {
+                if (IsValidate()) {
+                    var model = {
+                        "MaNV": $('#MaNV').val(),
+                        "HoNV": $('#HoNV').val(),
+                        "TenNV": $('#TenNV').val(),
+                        "GioiTinh": $('#GioiTinh').val() == "Nữ" ? true : false,
+                        "DiaChi": $('#DiaChi').val(),
+                        "NgaySinh": $('#NgaySinh').val(),
+                        "DienThoai": $('#DienThoai').val()
+                    };
+                    $.ajax({
+                        url: '/QuanLy/NhanViens/Create',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: model,
+                        success: function (res) {
+                            if (res.success) {
+                                window.location.reload();
+                            }
+                        },
+                        error: function (xhr) { alert('error'); }
+                    });
+                }
+            });
+        })
+        function IsValidate() {
+            var check = false;
+            debugger;
+            if ($('#MaNV').val() == '') {
+                $('MaNV').next().html('Mời nhập mã nhân viên!');
+                check = false;
+            } else {
+                $('MaSP').next().html('');
+                check = true;
+            }
+
+            if ($('#HoNV').val() == '' || $('#TenNV').val() == '') {
+                $('TenNV').next().html('Mời nhập họ tên nhân viên!');
+                check = false;
+            } else {
+                $('#HoNV').val() == '';
+                $('TenNV').next().html('');
+                check = true;
+            }
+            return check;
+        }
+    </script>
+}

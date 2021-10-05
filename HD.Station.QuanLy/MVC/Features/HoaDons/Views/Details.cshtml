@@ -1,0 +1,87 @@
+﻿@model QuanLy.src.Abstractions.Data.HoaDon
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Thông tin hóa đơn <span>@Html.DisplayFor(model => model.MaHD)</span></h3>
+<hr />
+<div>
+    <div>
+        <div class="container">
+            <dl class="row">
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.KhachHang.MaKH)
+                </dt>
+                <dd class="col col-sm-3">
+                    <a href="@Url.Action("Details", "KhachHangs", new { id = @Model.KhachHang.MaKH })">
+                        @Html.DisplayFor(model => model.KhachHang.MaKH)
+                    </a>
+                </dd>
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.NhanVien.MaNV)
+                </dt>
+                <dd class="col col-sm-3">
+                    <a href="@Url.Action("Details", "NhanViens", new { id = @Model.NhanVien.MaNV })">
+                        @Html.DisplayFor(model => model.NhanVien.MaNV)
+                    </a>
+                </dd>
+            </dl>
+            <dl class="row ">
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.NgayLapHD)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.NgayLapHD)
+                </dd>
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.NgayNhanHang)
+                </dt>
+                <dd class="col col-sm-3">
+                    @Html.DisplayFor(model => model.NgayNhanHang)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <h5>
+        Chi tiết hóa đơn
+        <span style="text-align:right">
+            <a href="@Url.Action("Create", "ChiTietHoaDons" , new { id=@Model.MaHD })"><i class="fas fa-cart-plus"></i></a>
+        </span>
+    </h5>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cthd in Model.ChiTietHoaDons)
+                {
+                    <tr>
+                        <td>
+                            <a asp-area="QuanLy" asp-controller="SanPhams" asp-action="Details" asp-route-id="@cthd.MaSP">
+                                @Html.DisplayFor(modelItem => cthd.MaSP)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => cthd.SoLuong)
+                        </td>
+                        <td>
+                            <a asp-area="QuanLy" asp-controller="ChiTietHoaDons" asp-action="Edit" asp-route-id="@cthd.MaHD" asp-route-maSP="@cthd.MaSP">Edit</a>|
+                            <a asp-area="QuanLy" asp-controller="ChiTietHoaDons" asp-action="Edit" asp-route-id="@cthd.MaHD" asp-route-maSP="@cthd.MaSP">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@Model.MaHD">Edit</a> |
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>

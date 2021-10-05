@@ -1,0 +1,46 @@
+﻿@model QuanLy.src.Abstractions.Data.KhachHang
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Nhập thông tin về khách hàng</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-area="QuanLy" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaKH" class="control-label"> Mã khách hàng </label>
+                <input asp-for="MaKH" class="form-control" />
+                <span asp-validation-for="MaKH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoTenKH" class="control-label"> Họ Tên </label>
+                <input asp-for="HoTenKH" class="form-control" />
+                <span asp-validation-for="HoTenKH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label"> Địa chỉ </label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienThoai" class="control-label"> Điện thoại </label>
+                <input asp-for="DienThoai" class="form-control" />
+                <span asp-validation-for="DienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

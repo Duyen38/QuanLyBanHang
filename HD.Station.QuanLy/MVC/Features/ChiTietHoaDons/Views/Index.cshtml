@@ -1,0 +1,57 @@
+﻿@model IEnumerable<QuanLy.src.Abstractions.Data.ChiTietHoaDon>
+
+@{
+    ViewData["Title"] = "Index";
+    var dlist = Model.GroupBy(m => m.MaHD);
+}
+
+<h5>Danh sách</h5>
+
+@foreach (var item in dlist)
+{
+    <h6>
+        Mã Hóa đơn: <span>
+            <strong>
+                <a asp-area="QuanLy" asp-controller="SanPhams" asp-action="Details" asp-route-id="@item.Key">
+                    @Html.DisplayFor(modelItem => item.Key)
+                </a>
+            </strong>
+        </span>
+        <span style="text-align:right">
+            <a asp-area="QuanLy" asp-controller="ChiTietHoaDons" asp-action="Create" asp-route-id="@item.Key"><i class="fas fa-cart-plus"></i></a>
+        </span>
+    </h6>
+    <table class="table ml-5">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaSP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoLuong)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in item)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Details", "SanPhams", new { id = i.MaSP})">
+                            @Html.DisplayFor(modelItem => i.MaSP)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => i.SoLuong)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = i.MaHD, maSP = i.MaSP }, new { Area = "QuanLy" }) |
+                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = i.MaHD, maSP = i.MaSP }, new { Area = "QuanLy" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

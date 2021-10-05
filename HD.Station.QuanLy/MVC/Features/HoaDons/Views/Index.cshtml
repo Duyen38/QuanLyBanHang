@@ -1,0 +1,172 @@
+﻿@model IEnumerable<QuanLy.src.Abstractions.Data.HoaDon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Danh sách hóa đơn</h3>
+<hr />
+<p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
+        Create
+    </button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaHD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.MaKH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NhanVien.MaNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayLapHD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayNhanHang)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaHD)
+                </td>
+                <td>
+                    <a asp-area="QuanLy" asp-action="Details" asp-controller="KhachHangs" asp-route-id="@item.MaNV">
+                        @Html.DisplayFor(modelItem => item.MaKH)
+                    </a>
+                </td>
+                <td>
+                    <a asp-area="QuanLy" asp-action="Details" asp-controller="NhanViens" asp-route-id="@item.MaKH">
+                        @Html.DisplayFor(modelItem => item.MaNV)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayLapHD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayNhanHang)
+                </td>
+                <td>
+                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaHD">Edit</a> |
+                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaHD">Details</a> |
+                    <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaHD">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Thêm hóa đơn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form>
+                            <div class="form-group">
+                                <label for="MaHD" class="control-label"> Mã hóa đơn </label>
+                                <input id="MaHD" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="MaKH" class="control-label">Mã khách hàng </label>
+                                @*<select id="MaKH" class="form-control" asp-items="ViewBag.MaKH"> </select>*@
+                            </div>
+                            <div class="form-group">
+                                <label for="MaNV" class="control-label"> Mã nhân viên </label>
+                                @*<select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNV"></select>*@
+                            </div>
+                            <div class="form-group">
+                                <label for="NgayLapHD" class="control-label"> Ngày lập hóa đơn </label>
+                                <input id="NgayLapHD" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="NgayNhanHang" class="control-label"> Ngày nhận hàng </label>
+                                <input id="NgayNhanHang" class="form-control" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+<hr>
+
+@section Scripts{
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#btnSave').click(function () {
+                    if (IsValidate()) {
+                        var model = {
+                            "MaHD": $('#MaHD').val(),
+                            "MaKH": $('#MaKH').val(),
+                            "MaNV": $('#MaNV').val(),
+                            "NgayLapHD": $('#NgayLapHD').val(),
+                            "NgayNhanHang": $('#NgayNhanHang').val()
+                        };
+                        $.ajax({
+                            url: '/QuanLy/HoaDons/Create',
+                            dataType: 'json',
+                            type: 'POST',
+                            data: model,
+                            success: function (res) {
+                                if (res.success) {
+                                    window.location.reload();
+                                }
+                            },
+                            error: function (xhr) { alert('error'); }
+                        });
+                    }
+                });
+            })
+            function IsValidate() {
+                var check = false;
+                debugger;
+
+                if ($('#MaHD').val() == '') {
+                    $('MaHD').next().html('Mời nhập mã hóa đơn!');
+                    check = false;
+                } else {
+                    $('MaHD').next().html('');
+                    check = true;
+                }
+
+                if ($('#MaKH').val() == '') {
+                    $('MaKH').next().html('Mời nhập mã khách hàng!');
+                    check = false;
+                } else {
+                    $('MaKH').next().html('');
+                    check = true;
+                }
+
+                if ($('#MaNV').val() == '') {
+                    $('MaNV').next().html('Mời nhập mã nhân viên!');
+                    check = false;
+                } else {
+                    $('MaSP').next().html('');
+                    check = true;
+                }
+                return check;
+            }
+    </script>
+}

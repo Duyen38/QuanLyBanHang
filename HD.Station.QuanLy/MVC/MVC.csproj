@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<LangVersion>9.0</LangVersion>
+	<!--<RazorLangVersion>3.0</RazorLangVersion>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNet.Web.Optimization" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+	<Folder Include="Features\ChiTietHoaDons\Models\" />
+	<Folder Include="Features\ChiTietHoaDons\Views\" />
+		
+	<Folder Include="Features\Home\Models\" />
+	  
+	<Folder Include="Features\HoaDons\Models\" />
+	<Folder Include="Features\HoaDons\Views\" />
+
+	<Folder Include="Features\KhachHangs\Models\" />
+	<Folder Include="Features\KhachHangs\Views\" />
+	<Folder Include="Features\NhanViens\Models\" />
+	  
+    <Folder Include="Features\SanPhams\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

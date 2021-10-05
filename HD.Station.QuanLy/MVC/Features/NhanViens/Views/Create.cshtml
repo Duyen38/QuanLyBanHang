@@ -1,0 +1,69 @@
+﻿@model QuanLy.src.Abstractions.Data.NhanVien
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Nhập thông tin về nhân Viên mới</h3>
+<hr />
+<div class="container">
+    <form asp-action="Create">
+        <div class="row">
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="MaNV" class="control-label"> Mã nhân viên </label>
+                    <input asp-for="MaNV" class="form-control" />
+                    <span asp-validation-for="MaNV" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HoNV" class="control-label"> Họ </label>
+                    <input asp-for="HoNV" class="form-control" />
+                    <span asp-validation-for="HoNV" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GioiTinh" class="control-label"> Giới tính </label>
+                    <select class="form-control form-select" asp-for="GioiTinh">
+                        <option selected>Chọn</option>
+                        <option value="True">Nữ</option>
+                        <option value="False">Nam</option>
+                    </select>
+                    <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DiaChi" class="control-label"> Địa chỉ </label>
+                    <input asp-for="DiaChi" class="form-control" />
+                    <span asp-validation-for="DiaChi" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TenNV" class="control-label"> Tên </label>
+                    <input asp-for="TenNV" class="form-control" />
+                    <span asp-validation-for="TenNV" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgaySinh" class="control-label"> Ngày sinh </label>
+                    <input type="date" min="1990-01-01" max="2005-12-31" asp-for="NgaySinh" class="form-control" />
+                    <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DienThoai" class="control-label"> Điện thoại </label>
+                    <input asp-for="DienThoai" class="form-control" />
+                    <span asp-validation-for="DienThoai" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    
+<div>
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
