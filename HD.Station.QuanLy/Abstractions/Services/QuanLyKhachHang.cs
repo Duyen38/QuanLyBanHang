@@ -40,9 +40,9 @@ namespace QuanLy.src.Abstractions.Services
         {
             return await _khachHangStore.UpdateListAsync(khachHang);
         }
-        public async Task<KhachHang> DeleteAsync(string id)
+        public async Task<KhachHang> DeleteAsync(KhachHang khachHang)
         {
-            return await _khachHangStore.DeleteAsync(id);
+            return await _khachHangStore.DeleteAsync(khachHang);
         }
     }
 }

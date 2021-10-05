@@ -52,10 +52,9 @@ namespace QuanLy.SqlServer.Store
             await _dbContext.SaveChangesAsync();
             return _dbContext.KhachHangs.FirstOrDefault();
         }
-        public async Task<KhachHang> DeleteAsync(string id)
+        public async Task<KhachHang> DeleteAsync(KhachHang khachHang)
         {
-            var khachHang = await _dbContext.KhachHangs.FindAsync(id);
-            _dbContext.KhachHangs.Remove(khachHang);
+            _dbContext.Remove(khachHang);
             await _dbContext.SaveChangesAsync();
             return _dbContext.KhachHangs.FirstOrDefault();
         }

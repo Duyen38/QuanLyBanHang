@@ -9,7 +9,7 @@ namespace QuanLy.src.Abstractions.Abstractions
     public interface IQuanLyKhachHang
     {
         Task<KhachHang> AddListAsync(KhachHang khachHang);
-        Task<KhachHang> DeleteAsync(string id);
+        Task<KhachHang> DeleteAsync(KhachHang khachHang);
         Task<IQueryable<KhachHang>> GetAllAsync();
         Task<KhachHang> GetByIdAsync(string name);
         Task<KhachHang> GetByNameAsync(string name);

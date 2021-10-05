@@ -24,7 +24,7 @@ namespace MVC.Features.HoaDons
             _quanLyKhachHang = quanLyKhachHang;
             _quanLyNhanVien = quanLyNhanVien;
         }
-        // GET: HoaDonsController
+        // GET: HoaDons
         public async Task<IActionResult> Index()
         {
             return View(await _quanLyHoaDon.GetAllAsync());
@@ -37,7 +37,25 @@ namespace MVC.Features.HoaDons
             return Json(new { Data = hoaDon, TotalItem = hoaDon.Count() });
         }
 
-        // GET: HoaDonsController/Details/5
+        // GET: SanPhams/GetDataById/id
+        public ActionResult GetDataById(decimal id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hoaDon = _quanLyHoaDon.GetByIdAsync(id);
+            if (hoaDon == null)
+            {
+                return NotFound();
+            }
+            //var k = JsonSerializer.Serialize(khachHang);
+            return Json(new { data = hoaDon, success = true });
+        }
+
+
+        // GET: HoaDons/Details/5
         public async Task<IActionResult> Details(decimal? id)
         {
             if (id == null)
@@ -53,7 +71,7 @@ namespace MVC.Features.HoaDons
             return View(hoaDon);
         }
 
-        // GET: HoaDonsController/Create
+        // GET: HoaDons/Create
         public IActionResult Create()
         {
             ViewData["MaKH"] = new SelectList(_quanLyKhachHang.GetListCustomerAsync(), "MaKH", "MaKH");
@@ -61,7 +79,7 @@ namespace MVC.Features.HoaDons
             return View();
         }
 
-        // POST: HoaDonsController/Create
+        // POST: HoaDons/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaHD,MaKH,MaNV,NgayLapHD,NgayNhanHang")] HoaDon hoaDon)
@@ -97,19 +115,18 @@ namespace MVC.Features.HoaDons
 
         // POST: HoaDonsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(decimal id, [Bind("MaHD,MaKH,MaNV,NgayLapHD,NgayNhanHang")] HoaDon hoaDon)
+        public async Task<ActionResult> Edit(HoaDon hoaDon)
         {
-            if (id != hoaDon.MaHD)
-            {
-                return NotFound();
-            }
-
+            var hd = await _quanLyHoaDon.GetByIdAsync(hoaDon.MaHD);
+            hd.MaKH = hoaDon.MaKH;
+            hd.MaNV = hoaDon.MaNV;
+            hd.NgayLapHD = hoaDon.NgayLapHD;
+            hd.NgayNhanHang = hoaDon.NgayNhanHang;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _quanLyHoaDon.UpdateListAsync(hoaDon);
+                    await _quanLyHoaDon.UpdateListAsync(hd);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,38 +139,33 @@ namespace MVC.Features.HoaDons
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
-            ViewData["MaKH"] = new SelectList(_quanLyKhachHang.GetListCustomerAsync(), "MaKH", "MaKH", hoaDon.MaKH);
-            ViewData["MaNV"] = new SelectList(_quanLyNhanVien.GetListEmployeeAsync(), "MaNV", "MaNV", hoaDon.MaNV);
-            return View(hoaDon);
+            return Json(new { success = false });
         }
 
-        // GET: HoaDonsController/Delete/5
-        public async Task<IActionResult> Delete(decimal? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _quanLyHoaDon.GetByIdAsync(id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-
-            return View(hoaDon);
-        }
-
-        // POST: HoaDonsController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // POST: HoaDons/Delete/5
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(decimal id)
         {
             var hoaDon = await _quanLyHoaDon.GetByIdAsync(id);
             await _quanLyHoaDon.DeleteFromListAsync(hoaDon);
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<ActionResult> Delete(decimal id)
+        {
+            try
+            {
+                var hoaDon = await _quanLyHoaDon.GetByIdAsync(id);
+                await _quanLyHoaDon.DeleteFromListAsync(hoaDon);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Json(new { success = false });
+            }
         }
 
         private bool HoaDonExists(decimal id)

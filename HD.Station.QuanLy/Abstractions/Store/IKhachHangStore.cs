@@ -13,7 +13,7 @@ namespace QuanLy.src.Abstractions.Store
         Task<KhachHang> GetByNameAsync(string name);
         Task<KhachHang> AddListAsync(KhachHang khachHang);
         Task<KhachHang> UpdateListAsync(KhachHang khachHang);
-        Task<KhachHang> DeleteAsync(string id);
+        Task<KhachHang> DeleteAsync(KhachHang khachHang);
         IEnumerable<KhachHang> GetListCustomerAsync();
     }
 }

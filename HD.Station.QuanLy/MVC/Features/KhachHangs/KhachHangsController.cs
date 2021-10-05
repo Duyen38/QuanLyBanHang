@@ -6,6 +6,7 @@ using QuanLy.src.Abstractions.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace MVC.Features.KhachHangs
@@ -24,7 +25,7 @@ namespace MVC.Features.KhachHangs
         //    return View();
         //}
 
-        //GET: KhachHangsController
+        //GET: KhachHangs
         public async Task<IActionResult> Index(string searchString)
         {
             var khachHang = await _quanLyKhachHang.GetAllAsync();
@@ -43,7 +44,7 @@ namespace MVC.Features.KhachHangs
         }
 
 
-        // GET: KhachHangsController/Details/5
+        // GET: KhachHangs/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -61,7 +62,7 @@ namespace MVC.Features.KhachHangs
             return View(khachHang);
         }
 
-        // GET: KhachHangsController/Create
+        // GET: KhachHangs/Create
         public IActionResult Create()
         {
             return View();
@@ -87,47 +88,38 @@ namespace MVC.Features.KhachHangs
             }
            
         }
-        //public async Task<IActionResult> Create([Bind("MaKH,HoTenKH,DiaChi,DienThoai")] KhachHang khachHang)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await _quanLyKhachHang.AddListAsync(khachHang);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(khachHang);
-        //}
 
-        // GET: KhachHangsController/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        // GET: KhachHangs/GetDataById/id
+        public ActionResult GetDataById(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var khachHang = await _quanLyKhachHang.GetByIdAsync(id);
+            var khachHang = _quanLyKhachHang.GetByIdAsync(id);
             if (khachHang == null)
             {
                 return NotFound();
             }
-            return View(khachHang);
+            //var k = JsonSerializer.Serialize(khachHang);
+            return Json(new { data = khachHang, success = true });
         }
 
-        // POST: KhachHangsController/Edit/5
+        // POST: KhachHangs/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaKH,HoTenKH,DiaChi,DienThoai")] KhachHang khachHang)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(KhachHang khachHang)
         {
-            if (id != khachHang.MaKH)
-            {
-                return NotFound();
-            }
-
+            var kh = await _quanLyKhachHang.GetByIdAsync(khachHang.MaKH);
+            kh.HoTenKH = khachHang.HoTenKH;
+            kh.DiaChi = khachHang.DiaChi;
+            kh.DienThoai = khachHang.DienThoai;
             if (ModelState.IsValid)
             {
                 try
-                {
-                    await _quanLyKhachHang.UpdateListAsync(khachHang);
+                {                    
+                    await _quanLyKhachHang.UpdateListAsync(kh);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -140,36 +132,20 @@ namespace MVC.Features.KhachHangs
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
-            return View(khachHang);
-        }
-
-        // GET: KhachHangsController/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var khachHang = await _quanLyKhachHang.GetByIdAsync(id);
-            if (khachHang == null)
-            {
-                return NotFound();
-            }
-
-            return View(khachHang);
+            return Json(new { success = false });
         }
 
         // POST: KhachHangsController/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             try
             {
-                var khachHang = _quanLyKhachHang.DeleteAsync(id);
+                var khachHang = await _quanLyKhachHang.GetByIdAsync(id);
+                await _quanLyKhachHang.DeleteAsync(khachHang);
                 return Json(new { success = true });
             }
             catch(Exception ex)
@@ -185,3 +161,46 @@ namespace MVC.Features.KhachHangs
         }
     }
 }
+// GET: KhachHangsController/Edit/5
+//public async Task<IActionResult> Edit(string id)
+//{
+//    if (id == null)
+//    {
+//        return NotFound();
+//    }
+
+//    var khachHang = await _quanLyKhachHang.GetByIdAsync(id);
+//    if (khachHang == null)
+//    {
+//        return NotFound();
+//    }
+//    return View(khachHang);
+//}
+//public async Task<IActionResult> Edit(string id, [Bind("MaKH,HoTenKH,DiaChi,DienThoai")] KhachHang khachHang)
+//{
+//    if (id != khachHang.MaKH)
+//    {
+//        return NotFound();
+//    }
+
+//    if (ModelState.IsValid)
+//    {
+//        try
+//        {
+//            await _quanLyKhachHang.UpdateListAsync(khachHang);
+//        }
+//        catch (DbUpdateConcurrencyException)
+//        {
+//            if (!KhachHangExists(khachHang.MaKH))
+//            {
+//                return NotFound();
+//            }
+//            else
+//            {
+//                throw;
+//            }
+//        }
+//        return RedirectToAction(nameof(Index));
+//    }
+//    return View(khachHang);
+//}

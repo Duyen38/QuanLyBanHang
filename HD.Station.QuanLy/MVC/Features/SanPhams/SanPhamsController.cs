@@ -94,18 +94,24 @@ namespace MVC.Features.SanPhams
                 return Json(new { success = false });
             }
         }
-        //public async Task<IActionResult> Create([Bind("MaSP,TenSp,DonViTinh,DonGia")] SanPham sanPham)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await _quanLySanPham.AddListAsync(sanPham);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(sanPham);
-        //}
+        // GET: SanPhams/GetDataById/id
+        public ActionResult GetDataById(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var sp = _quanLySanPham.GetByIdAsync(id);
+            if (sp == null)
+            {
+                return NotFound();
+            }
+            //var k = JsonSerializer.Serialize(khachHang);
+            return Json(new { data = sp, success = true });
+        }
 
-        // GET: SanPhamsController/Edit/5
+        // GET: SanPhams/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -121,21 +127,19 @@ namespace MVC.Features.SanPhams
             return View(sanPham);
         }
 
-        // POST: SanPhamsController/Edit/5
+        // POST: SanPhams/Edit
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaSP,TenSp,DonViTinh,DonGia")] SanPham sanPham)
+        public async Task<ActionResult> Edit(SanPham sanPham)
         {
-            if (id != sanPham.MaSP)
-            {
-                return NotFound();
-            }
-
+            var sp = await _quanLySanPham.GetByIdAsync(sanPham.MaSP);
+            sp.TenSp = sanPham.TenSp;
+            sp.DonGia = sanPham.DonGia;
+            sp.DonViTinh = sanPham.DonViTinh;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _quanLySanPham.UpdateListAsync(sanPham);
+                    await _quanLySanPham.UpdateListAsync(sp);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -148,36 +152,27 @@ namespace MVC.Features.SanPhams
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
-            return View(sanPham);
+            return Json(new { success = false });
         }
 
-        // GET: SanPhamsController/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // POST: SanPhams/Delete/5
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                var sp = await _quanLySanPham.GetByIdAsync(id);
+                await _quanLySanPham.DeleteFromLIstAsync(sp);
+                return Json(new { success = true });
             }
-
-            var sanPham = await _quanLySanPham.GetByIdAsync(id);
-            if (sanPham == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                Console.WriteLine(ex);
+                return Json(new { success = false });
             }
-
-            return View(sanPham);
-        }
-
-        // POST: SanPhamsController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var sanPham = await _quanLySanPham.GetByIdAsync(id);
-            await _quanLySanPham.DeleteFromLIstAsync(sanPham);
-            return RedirectToAction(nameof(Index));
         }
 
         private bool SanPhamExists(string id)

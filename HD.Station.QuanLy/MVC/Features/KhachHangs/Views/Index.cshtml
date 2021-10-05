@@ -28,26 +28,26 @@
         </tr>
     </thead>
     <tbody id="data-table">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HoTenKH)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DiaChi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DienThoai)
-                </td>
-                <td>
-                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaKH">Edit</a> |
-                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaKH">Details</a> | 
-                    <button class="btn btn-danger" id="btnDeleteItem" value="@item.MaKH">Delete</button>
+        @*@foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoTenKH)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DienThoai)
+                    </td>
+                    <td>
+                        <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaKH">Edit</a> |
+                        <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaKH">Details</a> |
+                        <button class="btn btn-danger" id="btnDeleteItem" value="@item.MaKH">Delete</button>
 
-                </td>
-            </tr>
-        }
+                    </td>
+                </tr>
+            }*@
     </tbody>
 </table>
 <hr />
@@ -98,11 +98,54 @@
     </div>
 </div>
 
+<!-- Modal Edit -->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Cập nhật thông tin khách hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="MaKH" class="control-label"> Mã khách hàng </label>
+                                <input type="text" class="form-control" id="editMaKH" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="DiaChi" class="control-label"> Địa chỉ </label>
+                                <input type="text" class="form-control" id="editDiaChi" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="HoTenKH" class="control-label"> Họ Tên </label>
+                                <input type="text" id="editHoTenKH" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="DienThoai" class="control-label"> Điện thoại </label>
+                                <input id="editDienThoai" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             GetData();
-            alert("success: ok1");
 
             //Create
             $('#btnSave').click(function () {
@@ -130,81 +173,140 @@
                 }
             });
 
-            function GetData() {
-                //alert("getdata: ok");
+            //Edit
+            $('body').on('click', '.btnEdit', function () {
+                var id = $(this).data('id');
+                console.log("edit clicked " + id);
+                GetDataById(id);
+            });
+
+            //Save info from modal edit/update
+            $('#btnEditSave').click(function () {
+                var model = {
+                    "MaKH": $('#editMaKH').val(),
+                    "HoTenKH": $('#editHoTenKH').val(),
+                    "DiaChi": $('#editDiaChi').val(),
+                    "DienThoai": $('#editDienThoai').val()
+                };
                 $.ajax({
-                    url: '/QuanLy/KhachHangs/GetData',
-                    type: 'GET',
+                    url: '/QuanLy/KhachHangs/Edit',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: model,
                     success: function (res) {
-                        alert(res);
-                        if (res.TotalItem > 0) {
-                            alert("res.TotalItem: ok");
-                            var listKH = res.Data;
-                            var html = "";
-                            for (let i = 0; i < res.TotalItems; i++) {
-                                html += "<tr>";
-                                html += "<td>" + listKH[i].HoTenKH + "</td>";
-                                html += "<td>" + listKH[i].DiaChi + "</td>";
-                                html += "<td>" + listKH[i].DienThoai + "</td>";
-                                html += "<td><a href='#' class='btn btn-warning'>Edit</a> | a href='#' class='btn btn-info'>Details</a> | <a href='#' class='btn btn-danger' id ='btnDeleteItem' value = 'listKH[i].MaKH'>Delete</a></td>";
-                                //html += "<td>" + "<td><a asp-area=" + "QuanLy" + "asp-action=" + "Edit" + "asp-route-id=" + listKH[i].MaKH + ">Edit</a> |" +
-                                //    "<a asp-area=" + "QuanLy" + "asp-action=" + "Details" + "asp-route-id=" + listKH[i].MaKH + ">Details</a> | " +
-                                //    "<button class=" + "btn btn-danger" + "id=" + "btnDeleteItem" + "value=" + listKH[i].MaKH + ">Delete</button></td>";
-                                html += "</tr>";
-                            }
-                            $('#data-table').html(html);
+                        alert("Cập nhật thành công.");
+                        if (res.success) {
+                            GetData();
+                            $('#modalEdit').modal('hide');
                         }
                     },
                     error: function (xhr) { alert('error'); }
                 });
-            }
+            });
 
-            function IsValidate() {
-                var check = false;
-                if ($('#MaKH').val() == '') {
-                    $('MaKH').next().html('Mời nhập mã khách hàng!');
-                    check = false;
-                } else {
-                    $('MaKH').next().html('');
-                    check = true;
-                }
-
-                if ($('#HoTenKH').val() == '') {
-                    $('TenHoTenKHNV').next().html('Mời nhập họ tên khách hàng!');
-                    check = false;
-                } else {
-                    $('#HoTenKH').val() == '';
-                    check = true;
-                }
-                return check;
-            }
-            function ResetFieldInput() {
-                $('#MaKH').val('');
-                $('#HoTenKH').val('');
-                $('#DiaChi').val('');
-                $('#DienThoai').val('');
-            }
-
-            //Delete item in list
-            $('#btnDeleteItem').click(function () {
-                var id = $(this).val();
-                alert(id);
-                if (confirm("Xác nhận xóa khách hàng ?")) {
-                    $.ajax({
-                        url: '/QuanLy/KhachHangs/Delete',
-                        type: 'POST',
-                        data: id,
-                        success: function (res) {
-                            if (res.success) {
-                                window.location.reload();
-                            }
-                        },
-                        error: function (xhr) { alert('error'); }
-                    });
+            //Delete
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id');
+                console.log("delete clicked " + id);
+                var conf = confirm('Xác nhận xóa khách hàng.');
+                if (conf) {
+                    Delete(id);
                 }
             });
-        })
+        });
 
-        
+        function GetDataById(id) {
+            $.ajax({
+                url: '/QuanLy/KhachHangs/GetDataById',
+                type: 'GET',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        if (res.data != null) {
+                            $('#editMaKH').val(res.data.result.maKH);
+                            $('#editHoTenKH').val(res.data.result.hoTenKH);
+                            $('#editDiaChi').val(res.data.result.diaChi);
+                            $('#editDienThoai').val(res.data.result.dienThoai);
+                            $('#modalEdit').modal('show');
+                        }
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function GetData() {
+            $.ajax({
+                url: '/QuanLy/KhachHangs/GetData',
+                type: 'GET',
+                success: function (res) {
+                    if (res.totalItem > 0) {
+                        alert("Get Data")
+                        var listKH = res.data;
+                        var html = "";
+                        for (let i = 0; i < res.totalItem; i++) {
+                            url = "/QuanLy/KhachHangs/Details/" + listKH[i].maKH;
+                            html += "<tr id='tr" + listKH[i].maKH + "'>";
+                            html += "<td>" + listKH[i].hoTenKH + "</td>";
+                            html += "<td>" + listKH[i].diaChi + "</td>";
+                            html += "<td>" + listKH[i].dienThoai + "</td>";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + listKH[i].maKH + "'>Edit</a> | " +
+                                "<a href='"+url+"' class='btn btn-info btnDetails' data-id ='" + listKH[i].maKH + "' > Details</a> | " +
+                                    "<a class='btn btn-danger btnDelete' data-id='" + listKH[i].maKH + "'>Delete</a></td > ";
+                            //html += "<td>" + "<td><a asp-area=" + "QuanLy" + "asp-action=" + "Edit" + "asp-route-id=" + listKH[i].MaKH + ">Edit</a> |" +
+                            //    "<a asp-area=" + "QuanLy" + "asp-action=" + "Details" + "asp-route-id=" + listKH[i].MaKH + ">Details</a> | " +
+                            //    "<button class=" + "btn btn-danger" + "id=" + "btnDeleteItem" + "value=" + listKH[i].MaKH + ">Delete</button></td>";
+                            html += "</tr>";
+                        }
+                        $('#data-table').html(html);
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function Delete(id) {
+            $.ajax({
+                url: '/QuanLy/KhachHangs/Delete',
+                type: 'POST',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        $('#tr' + id).remove();
+                        GetData();
+                    } else {
+                        console.log("Error!");
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function IsValidate() {
+            var check = false;
+            if ($('#MaKH').val() == '') {
+                $('MaKH').next().html('Mời nhập mã khách hàng!');
+                check = false; return;
+            } else {
+                $('MaKH').next().html('');
+                check = true;
+            }
+
+            if ($('#HoTenKH').val() == '') {
+                $('TenHoTenKHNV').next().html('Mời nhập họ tên khách hàng!');
+                check = false; return;
+            } else {
+                $('#HoTenKH').val() == '';
+                check = true;
+            }
+            return check;
+        }
+        function ResetFieldInput() {
+            $('#MaKH').val('');
+            $('#HoTenKH').val('');
+            $('#DiaChi').val('');
+            $('#DienThoai').val('');
+        }
+
     </script>
 }

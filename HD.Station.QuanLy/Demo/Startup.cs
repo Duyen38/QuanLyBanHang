@@ -25,6 +25,10 @@ namespace Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //Fetching Connection string from APPSETTINGS.JSON
+           
             //services.AddDbContext<DbQuanLyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MvcDbConstr")));
             
             services.AddRazorPages().AddRazorPagesOptions( o => {
