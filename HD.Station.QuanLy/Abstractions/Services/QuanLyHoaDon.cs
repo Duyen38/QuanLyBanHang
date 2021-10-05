@@ -19,6 +19,10 @@ namespace QuanLy.src.Abstractions.Services
         {
             return await _hoaDonStore.GetAllAsync();
         }
+        public IEnumerable<HoaDon> GetListBill()
+        {
+            return _hoaDonStore.GetListBill();
+        }
 
         public async Task<HoaDon> GetByIdAsync(decimal? id)
         {

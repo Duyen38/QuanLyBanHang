@@ -30,6 +30,13 @@ namespace MVC.Features.HoaDons
             return View(await _quanLyHoaDon.GetAllAsync());
         }
 
+        // GET: HoaDons/GetData
+        public ActionResult GetData()
+        {
+            var hoaDon = _quanLyHoaDon.GetListBill();
+            return Json(new { Data = hoaDon, TotalItem = hoaDon.Count() });
+        }
+
         // GET: HoaDonsController/Details/5
         public async Task<IActionResult> Details(decimal? id)
         {

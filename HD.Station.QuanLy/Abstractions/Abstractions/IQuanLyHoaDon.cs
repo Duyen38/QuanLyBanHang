@@ -13,5 +13,6 @@ namespace QuanLy.src.Abstractions.Abstractions
         Task<HoaDon> AddListAsync(HoaDon hoaDon);
         Task<HoaDon> UpdateListAsync(HoaDon hoaDon);
         Task<HoaDon> DeleteFromListAsync(HoaDon hoaDon);
+        IEnumerable<HoaDon> GetListBill();
     }
 }

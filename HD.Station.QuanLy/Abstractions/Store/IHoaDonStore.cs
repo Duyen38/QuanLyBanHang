@@ -11,6 +11,7 @@ namespace QuanLy.src.Abstractions.Store
     {
         Task<IQueryable<HoaDon>> GetAllAsync();
         Task<HoaDon> GetByIdAsync(decimal? id);
+        IEnumerable<HoaDon> GetListBill();
         Task<HoaDon> UpdateListAsync(HoaDon hoaDon);
         Task<HoaDon> AddListAsync(HoaDon hoaDon);
         Task<HoaDon> DeleteFromListAsync(HoaDon hoaDon);

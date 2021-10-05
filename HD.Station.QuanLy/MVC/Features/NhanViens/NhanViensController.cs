@@ -33,6 +33,13 @@ namespace MVC.Features.NhanViens
             return View(nhanVien);
         }
 
+        //GET: NhanViens/getdata
+        public ActionResult GetData()
+        {
+            var nhanVien = _quanLyNhanVien.GetListEmployeeAsync();
+            return Json(new { Data = nhanVien, TotalItem = nhanVien.Count() });
+        }
+
         // GET: NhanVienController/Details/5
         public async Task<IActionResult> Details(string id)
         {

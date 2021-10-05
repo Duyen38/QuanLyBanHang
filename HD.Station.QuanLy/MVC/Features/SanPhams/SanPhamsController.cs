@@ -32,6 +32,13 @@ namespace MVC.Features.SanPhams
             return View(await sanPham.ToListAsync());
         }
 
+        //GET: SanPhams/getdata
+        public ActionResult GetData()
+        {
+            var sanPham = _quanLySanPham.GetListProduct();
+            return Json(new { Data = sanPham, TotalItem = sanPham.Count() });
+        }
+
         // GET: ThongKeDSSP
         public async Task<IActionResult> ThongKeDSSP(string searchString)
         {

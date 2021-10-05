@@ -21,6 +21,10 @@ namespace QuanLy.SqlServer.Store
             //throw new NotImplementedException();
             return _dbContext.HoaDons.AsQueryable();
         }
+        public IEnumerable<HoaDon> GetListBill()
+        {
+            return _dbContext.HoaDons.ToList();
+        }
         public async Task<HoaDon> GetByIdAsync(decimal? id)
         {
             var hoaDon = await _dbContext.HoaDons
