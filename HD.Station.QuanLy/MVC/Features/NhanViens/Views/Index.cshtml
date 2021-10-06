@@ -26,8 +26,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.HoNV)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.TenNV)
             </th>
             <th>
@@ -45,8 +43,8 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model)
+    <tbody id="data-table">
+        @*@foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -56,7 +54,6 @@
                     @Html.DisplayFor(modelItem => item.TenNV)
                 </td>
                 <td>
-                    @*@Html.DisplayFor(modelItem => item.GioiTinh)*@
                     @if (item.GioiTinh == true)
                     {
                         <p>Nữ</p>
@@ -81,11 +78,11 @@
                     <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaNV">Delete</a>
                 </td>
             </tr>
-        }
+        }*@
     </tbody>
 </table>
 
-<!-- Modal -->
+<!-- Modal Create-->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -97,44 +94,44 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="MaNV" class="control-label"> Mã nhân viên </label>
-                                    <input id="MaNV" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="HoNV" class="control-label"> Họ </label>
-                                    <input id="HoNV" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="GioiTinh" class="control-label"> Giới tính </label>
-                                    <select class="form-control form-select" id="GioiTinh">
-                                        <option selected>Chọn</option>
-                                        <option value="True">Nữ</option>
-                                        <option value="False">Nam</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="DiaChi" class="control-label"> Địa chỉ </label>
-                                    <input id="DiaChi" class="form-control" />
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="MaNV" class="control-label"> Mã nhân viên </label>
+                                <input id="MaNV" class="form-control" />
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="TenNV" class="control-label"> Tên </label>
-                                    <input id="TenNV" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="NgaySinh" class="control-label"> Ngày sinh </label>
-                                    <input type="date" min="1990-01-01" max="2005-12-31" id="NgaySinh" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="DienThoai" class="control-label"> Điện thoại </label>
-                                    <input id="DienThoai" class="form-control" />
-                                </div>
+                            <div class="form-group">
+                                <label for="HoNV" class="control-label"> Họ </label>
+                                <input id="HoNV" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="GioiTinh" class="control-label"> Giới tính </label>
+                                <select class="form-control form-select" id="GioiTinh">
+                                    <option selected>Chọn</option>
+                                    <option value="True">Nữ</option>
+                                    <option value="False">Nam</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="DiaChi" class="control-label"> Địa chỉ </label>
+                                <input id="DiaChi" class="form-control" />
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="TenNV" class="control-label"> Tên </label>
+                                <input id="TenNV" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="NgaySinh" class="control-label"> Ngày sinh </label>
+                                <input type="date" min="1990-01-01" max="2005-12-31" id="NgaySinh" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="DienThoai" class="control-label"> Điện thoại </label>
+                                <input id="DienThoai" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -144,11 +141,73 @@
         </div>
     </div>
 </div>
-<hr>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Cập nhật thông tin nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="MaNV" class="control-label"> Mã nhân viên </label>
+                                <input id="editMaNV" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="HoNV" class="control-label"> Họ </label>
+                                <input id="editHoNV" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="GioiTinh" class="control-label"> Giới tính </label>
+                                <select class="form-control form-select" id="editGioiTinh">
+                                    <option selected>Chọn</option>
+                                    <option value="True">Nữ</option>
+                                    <option value="False">Nam</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="DiaChi" class="control-label"> Địa chỉ </label>
+                                <input id="editDiaChi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="TenNV" class="control-label"> Tên </label>
+                                <input id="editTenNV" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="NgaySinh" class="control-label"> Ngày sinh </label>
+                                <input type="date" min="1990-01-01" max="2005-12-31" id="editNgaySinh" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="DienThoai" class="control-label"> Điện thoại </label>
+                                <input id="editDienThoai" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            GetData();
+
             $('#btnSave').click(function () {
                 if (IsValidate()) {
                     var model = {
@@ -167,14 +226,135 @@
                         data: model,
                         success: function (res) {
                             if (res.success) {
-                                window.location.reload();
+                                GetData();
+                                $('#modalCreate').modal('hide');
+                                //window.location.reload();
                             }
                         },
                         error: function (xhr) { alert('error'); }
                     });
                 }
             });
-        })
+            //Edit
+            $('body').on('click', '.btnEdit', function () {
+                var id = $(this).data('id');
+                console.log("edit clicked " + id);
+                GetDataById(id);
+            });
+
+            //Save info from modal edit/update
+            $('#btnEditSave').click(function () {
+                var model = {
+                    "MaNV": $('#editMaNV').val(),
+                    "HoNV": $('#editHoNV').val(),
+                    "TenNV": $('#editTenNV').val(),
+                    "GioiTinh": $('#editGioiTinh').val() == "Nữ" ? false : true,
+                    "DiaChi": $('#editDiaChi').val(),
+                    "NgaySinh": $('#editNgaySinh').val(),
+                    "DienThoai": $('#editDienThoai').val()
+                };
+                $.ajax({
+                    url: '/QuanLy/NhanViens/Edit',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: model,
+                    success: function (res) {
+                        alert("Cập nhật thành công.");
+                        if (res.success) {
+                            GetData();
+                            $('#modalEdit').modal('hide');
+                        }
+                    },
+                    error: function (xhr) { alert('error'); }
+                });
+            });
+
+            //Delete
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id');
+                console.log("delete clicked " + id);
+                var conf = confirm('Xác nhận xóa khách hàng.');
+                if (conf) {
+                    Delete(id);
+                }
+            });
+        });
+
+        function GetDataById(id) {
+            $.ajax({
+                url: '/QuanLy/NhanViens/GetDataById',
+                type: 'GET',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        if (res.data != null) {
+                            var gioiTinhNV = res.data.result.gioiTinh == true ? "Nữ" : "Nam";
+
+                            $('#editMaNV').val(res.data.result.maNV);
+                            $('#editHoNV').val(res.data.result.hoNV);
+                            $('#editTenNV').val(res.data.result.tenNV);
+                            $('#editGioiTinh').val(gioiTinhNV);
+                            $('#editNgaySinh').val(res.data.result.ngaySinh);
+                            $('#editDiaChi').val(res.data.result.diaChi);
+                            $('#editDienThoai').val(res.data.result.dienThoai);
+
+                            $('#modalEdit').modal('show');
+                        }
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function GetData() {
+            $.ajax({
+                url: '/QuanLy/NhanViens/GetData',
+                type: 'GET',
+                success: function (res) {
+                    if (res.totalItem > 0) {
+                        alert("Get Data")
+                        var list = res.data;
+                        var html = "";
+                        for (let i = 0; i < res.totalItem; i++) {
+
+                            var gt = list[i].gioiTinh == true ? "Nữ" : "Nam";
+                            urlDetails = "/QuanLy/NhanViens/Details/" + list[i].maNV;
+
+                            html += "<tr id='tr" + list[i].maNV + "'>";
+                            html += "<td>" + list[i].hoNV + " " + list[i].tenNV + "</td>";
+                            html += "<td>" + gt + "</td>";
+                            html += "<td>" + list[i].ngaySinh + "</td>";
+                            html += "<td>" + list[i].diaChi + "</td>";
+                            html += "<td>" + list[i].dienThoai + "</td>";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maNV + "'>Edit</a> | " +
+                                "<a href='" + urlDetails + "' class='btn btn-info btnDetails' data-id ='" + list[i].maNV + "' > Details</a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maNV + "'>Delete</a></td > ";
+                            html += "</tr>";
+                        }
+                        $('#data-table').html(html);
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function Delete(id) {
+            $.ajax({
+                url: '/QuanLy/NhanViens/Delete',
+                type: 'POST',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        $('#tr' + id).remove();
+                        GetData();
+                    } else {
+                        console.log("Error!");
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
         function IsValidate() {
             var check = false;
             debugger;

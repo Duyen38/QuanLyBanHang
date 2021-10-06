@@ -9,11 +9,11 @@ namespace QuanLy.src.Abstractions.Abstractions
     public interface IQuanLyNhanVien
     {
         Task<IQueryable<NhanVien>> GetAllAsync();
+        IEnumerable<NhanVien> GetListEmployeeAsync();
         Task<NhanVien> GetByIdAsync(string id);
         Task<NhanVien> GetByNameAsync(string name);
         Task<NhanVien> AddListAsync(NhanVien nhanVien);
         Task<NhanVien> UpdateListAsync(NhanVien nhanVien);
-        Task<NhanVien> DeleteAsync(string id);
-        IEnumerable<NhanVien> GetListEmployeeAsync();
+        Task<NhanVien> DeleteAsync(NhanVien nhanVien);
     }
 }

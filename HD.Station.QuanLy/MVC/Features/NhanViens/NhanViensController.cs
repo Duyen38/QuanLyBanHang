@@ -40,7 +40,23 @@ namespace MVC.Features.NhanViens
             return Json(new { Data = nhanVien, TotalItem = nhanVien.Count() });
         }
 
-        // GET: NhanVienController/Details/5
+        // GET: NhanViens/GetDataById/id
+        public ActionResult GetDataById(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var nhanVien = _quanLyNhanVien.GetByIdAsync(id);
+            if (nhanVien == null)
+            {
+                return NotFound();
+            }
+
+            return Json(new { data = nhanVien, success = true });
+        }
+        // GET: NhanVien/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -58,13 +74,13 @@ namespace MVC.Features.NhanViens
             return View(nhanVien);
         }
 
-        // GET: NhanVienController/Create
+        // GET: NhanVien/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: NhanVienController/Create
+        // POST: NhanVien/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(NhanVien nhanVien)
@@ -83,24 +99,8 @@ namespace MVC.Features.NhanViens
                 return Json(new { success = false });
             }
         }
-        //public async Task<IActionResult> Create([Bind("MaNV,HoNV,TenNV,GioiTinh,NgaySinh,DiaChi,DienThoai")] NhanVien nhanVien)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            await _quanLyNhanVien.AddListAsync(nhanVien);
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        catch
-        //        {
-        //            ViewBag.Message = string.Format("Lỗi! ID Nhân viên đã tồn tại.");
-        //        }
-        //    }
-        //    return View(nhanVien);
-        //}
 
-        // GET: NhanViensController/Edit/5
+        // GET: NhanViens/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -117,27 +117,28 @@ namespace MVC.Features.NhanViens
             return View(nhanVien);
         }
 
-        // POST: NhanVienController/Edit/5
+        // POST: NhanVien/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaNV,HoNV,TenNV,GioiTinh,NgaySinh,DiaChi,DienThoai")] NhanVien nhanVien)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(NhanVien nhanVien)
         {
-            if (id != nhanVien.MaNV)
-            {
-                return NotFound();
-            }
-
+            var nv = await _quanLyNhanVien.GetByIdAsync(nhanVien.MaNV);
+            nv.HoNV = nhanVien.HoNV;
+            nv.TenNV = nhanVien.TenNV;
+            nv.GioiTinh = nhanVien.GioiTinh;
+            nv.NgaySinh = nhanVien.NgaySinh;
+            nv.DiaChi = nhanVien.DiaChi;
+            nv.DienThoai = nhanVien.DienThoai;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _quanLyNhanVien.UpdateListAsync(nhanVien);
+                    await _quanLyNhanVien.UpdateListAsync(nv);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!NhanVienExists(nhanVien.MaNV))
                     {
-                        ViewBag.Message = string.Format("Không tìm thấy Mã Nhân Viên!");
                         return NotFound();
                     }
                     else
@@ -145,43 +146,93 @@ namespace MVC.Features.NhanViens
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
-            return View(nhanVien);
+            return Json(new { success = false });
         }
 
-        // GET: NhanVienController/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // POST: NhanVien/Delete/5
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                var nhanVien = await _quanLyNhanVien.GetByIdAsync(id);
+                await _quanLyNhanVien.DeleteAsync(nhanVien);
+                return Json(new { success = true });
             }
-
-            //var nhanVien = await _context.NhanViens
-            //    .FirstOrDefaultAsync(m => m.MaNV == id);
-            var nhanVien = await _quanLyNhanVien.GetByIdAsync(id);
-
-            if (nhanVien == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                Console.WriteLine(ex);
+                return Json(new { success = false });
             }
-
-            return View(nhanVien);
-        }
-
-        // POST: NhanVienController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            await _quanLyNhanVien.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
         }
 
         private bool NhanVienExists(string id)
         {
             return _quanLyNhanVien.GetByIdAsync(id) != null;
         }
+        //public async Task<IActionResult> Create([Bind("MaNV,HoNV,TenNV,GioiTinh,NgaySinh,DiaChi,DienThoai")] NhanVien nhanVien)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            await _quanLyNhanVien.AddListAsync(nhanVien);
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        catch
+        //        {
+        //            ViewBag.Message = string.Format("Lỗi! ID Nhân viên đã tồn tại.");
+        //        }
+        //    }
+        //    return View(nhanVien);
+        //}
+        //public async Task<IActionResult> Edit(string id, [Bind("MaNV,HoNV,TenNV,GioiTinh,NgaySinh,DiaChi,DienThoai")] NhanVien nhanVien)
+        //{
+        //    if (id != nhanVien.MaNV)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            await _quanLyNhanVien.UpdateListAsync(nhanVien);
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!NhanVienExists(nhanVien.MaNV))
+        //            {
+        //                ViewBag.Message = string.Format("Không tìm thấy Mã Nhân Viên!");
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(nhanVien);
+        //}
+        // GET: NhanVienController/Delete/5
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var nhanVien = await _quanLyNhanVien.GetByIdAsync(id);
+
+        //    if (nhanVien == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(nhanVien);
+        //}
     }
 }

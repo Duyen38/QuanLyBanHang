@@ -86,7 +86,6 @@ namespace MVC.Features.KhachHangs
                 Console.WriteLine(ex);
                 return Json(new { success = false });
             }
-           
         }
 
         // GET: KhachHangs/GetDataById/id
@@ -137,7 +136,7 @@ namespace MVC.Features.KhachHangs
             return Json(new { success = false });
         }
 
-        // POST: KhachHangsController/Delete/5
+        // POST: KhachHangs/Delete/5
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id)
