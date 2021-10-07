@@ -1,0 +1,57 @@
+﻿@model QuanLy.src.Abstractions.Data.SanPham
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h4>Thông tin về sản phẩm</h4>
+<p>
+    <a asp-area="QuanLy" asp-action="ThongKeDSSP">Thống kê danh sách sản phẩm</a>
+</p>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenSp)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenSp)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DonGia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DonGia)
+            @Html.DisplayFor(model => model.DonViTinh)
+        </dd>
+    </dl>
+</div>
+<div>
+    <p>Danh sách hóa đơn</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã hóa đơn</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model.ChiTietHoaDons)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="QuanLy" asp-action="Details" asp-controller="HoaDons" asp-route-id="@item.MaHD">@item.MaHD</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>
+

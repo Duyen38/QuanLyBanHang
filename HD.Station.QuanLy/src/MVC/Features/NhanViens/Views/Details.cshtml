@@ -1,0 +1,95 @@
+﻿@model QuanLy.src.Abstractions.Data.NhanVien
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Thông tin về nhân viên</h3>
+
+<div>
+    <hr />
+    <div class="container">
+        <dl class="row">
+            <dt class="col col-sm-3">
+                @Html.DisplayNameFor(model => model.HoNV)
+                @Html.DisplayNameFor(model => model.TenNV)
+            </dt>
+            <dd class="col col-sm-3">
+                @Html.DisplayFor(model => model.HoNV)
+                @Html.DisplayFor(model => model.TenNV)
+            </dd>
+            <dt class="col col-sm-3">
+
+            </dt>
+            <dd class="col col-sm-3">
+
+            </dd>
+            <dt class="col col-sm-3">
+                @Html.DisplayNameFor(model => model.GioiTinh)
+            </dt>
+            <dd class="col -sm-3">
+                @if (@Model.GioiTinh == true)
+                {
+                    <p>Nữ</p>
+                }
+                else
+                {
+                    <p>Nam</p>
+                }
+            </dd>
+            <dt class="col col-sm-3">
+                @Html.DisplayNameFor(model => model.NgaySinh)
+            </dt>
+            <dd class="col col-sm-3">
+                @Html.DisplayFor(model => model.NgaySinh)
+            </dd>
+            <dt class="col col-sm-3">
+                @Html.DisplayNameFor(model => model.DiaChi)
+            </dt>
+            <dd class="col col-sm-3">
+                @Html.DisplayFor(model => model.DiaChi)
+            </dd>
+            <dt class="col col-sm-3">
+                @Html.DisplayNameFor(model => model.DienThoai)
+            </dt>
+            <dd class="col col-sm-3">
+                @Html.DisplayFor(model => model.DienThoai)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <p>Danh sách hóa đơn</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Mã khách hàng</th>
+                    <th>Ngày lập hóa đơn</th>
+                    <th>Ngày nhận hàng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var h in @Model.HoaDons)
+                {
+                    <tr>
+                        <td>
+                            <a asp-area="QuanLy" asp-action="Details" asp-controller="HoaDons" asp-route-id="h.MaHD">@h.MaHD</a>
+                        </td>
+                        <td>
+                            <a asp-area="QuanLy" asp-action="Details" asp-controller="KhachHangs" asp-route-id="h.MaKH">@h.MaKH</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => h.NgayLapHD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => h.NgayNhanHang)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,310 @@
+﻿@model IEnumerable<QuanLy.src.Abstractions.Data.SanPham>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 style="">Danh sách sản phẩm</h3>
+<p>
+    <a asp-area="QuanLy" asp-action="ThongKeDSSP">Thống kê danh sách sản phẩm</a>
+</p>
+<div class="row">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
+        Create
+    </button>
+    <p class="col-sm-4" style="text-align:right">
+        Ngày: <span id="datetime"> </span>
+        <script>
+            var dt = new Date();
+            document.getElementById("datetime").innerHTML = dt.toLocaleString();
+        </script>
+    </p>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenSp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonViTinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGia)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="data-table">
+        @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenSp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonViTinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonGia)
+                </td>
+                <td>
+                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaSP">Edit</a> |
+                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaSP">Details</a> |
+                    <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaSP">Delete</a>
+                </td>
+            </tr>
+        }*@
+    </tbody>
+</table>
+
+<!-- Modal create -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Thêm sản phẩm mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label for="MaSP" class="control-label"> Mã sản phẩm </label>
+                                    <input id="MaSP" class="form-control" />
+                                    @*<span asp-validation-for="MaSP" class="text-danger"></span>*@
+                                </div>
+                                <div class="form-group">
+                                    <label for="DonGia" class="control-label"> Đơn giá </label>
+                                    <input id="DonGia" class="form-control" />
+                                    @*<span asp-validation-for="DonGia" class="text-danger"></span>*@
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="TenSp" class="control-label">Tên sản phẩm </label>
+                                    <input id="TenSp" class="form-control" />
+                                    @*<span asp-validation-for="TenSp" class="text-danger"></span>*@
+                                </div>
+                                <div class="form-group">
+                                    <label for="DonViTinh" class="control-label"> Đơn vị tính </label>
+                                    <input id="DonViTinh" class="form-control" />
+                                    @*<span asp-validation-for="DonViTinh" class="text-danger"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit -->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Cập nhật thông tin sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="MaSP" class="control-label"> Mã sản phẩm </label>
+                                <input type="text" class="form-control" id="editMaSP" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="TenSp" class="control-label"> Tên sản phẩm</label>
+                                <input type="text" class="form-control" id="editTenSp" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="DonGia" class="control-label"> Đơn giá </label>
+                                <input type="text" id="editDonGia" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="DonViTinh" class="control-label"> Đơn vị tính </label>
+                                <input id="editDonViTinh" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetData();
+
+            $('#btnSave').click(function () {
+                if (IsValidate()) {
+                    var model = {
+                        "MaSP": $('#MaSP').val(),
+                        "TenSp": $('#TenSp').val(),
+                        "DonGia": $('#DonGia').val(),
+                        "DonViTinh": $('#DonViTinh').val()
+                    };
+                    $.ajax({
+                        url: '/QuanLy/SanPhams/Create',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: model,
+                        success: function (res) {
+                            if (res.success) {
+                                $('#modalCreaete').modal('hide');
+                                GetData();
+                            }
+                        },
+                        error: function (xhr) { alert('error'); }
+                    });
+                }
+            });
+            //Edit
+            $('body').on('click', '.btnEdit', function () {
+                var id = $(this).data('id');
+                console.log("edit clicked " + id);
+                GetDataById(id);
+            });
+
+            //Save info from modal edit/update
+            $('#btnEditSave').click(function () {
+                var model = {
+                    "MaSP": $('#editMaSP').val(),
+                    "TenSp": $('#editTenSp').val(),
+                    "DonGia": $('#editDonGia').val(),
+                    "DonViTinh": $('#editDonViTinh').val()
+                };
+                $.ajax({
+                    url: '/QuanLy/SanPhams/Edit',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: model,
+                    success: function (res) {
+                        alert("Cập nhật thành công.");
+                        if (res.success) {
+                            $('#modalEdit').modal('hide');
+                            GetData();
+                        }
+                    },
+                    error: function (xhr) { alert('error'); }
+                });
+            });
+
+            //Delete
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id');
+                console.log("delete clicked " + id);
+                var conf = confirm('Xác nhận xóa sản phẩm.');
+                if (conf) {
+                    Delete(id);
+                }
+            });
+        });
+
+        function GetDataById(id) {
+            $.ajax({
+                url: '/QuanLy/SanPhams/GetDataById',
+                type: 'GET',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        if (res.data != null) {
+                            $('#editMaSP').val(res.data.result.maSP);
+                            $('#editTenSp').val(res.data.result.tenSp);
+                            $('#editDonGia').val(res.data.result.donGia);
+                            $('#editDonViTinh').val(res.data.result.donViTinh);
+                            $('#modalEdit').modal('show');
+                        }
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function GetData() {
+            $.ajax({
+                url: '/QuanLy/SanPhams/GetData',
+                type: 'GET',
+                success: function (res) {
+                    if (res.totalItem > 0) {
+                        var list = res.data;
+                        var html = "";
+                        for (let i = 0; i < res.totalItem; i++) {
+                            url = "/QuanLy/SanPhams/Details/" + list[i].maSP;
+                            html += "<tr id='tr" + list[i].maSP + "'>";
+                            html += "<td>" + list[i].tenSp + "</td>";
+                            html += "<td>" + list[i].donGia + "</td>";
+                            html += "<td>" + list[i].donViTinh + "</td>";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maSP + "'>Edit</a> | " +
+                                "<a href='"+url+"' class='btn btn-info btnDetails' data-id ='" + list[i].maSP + "' > Details</a> | " +
+                                    "<a class='btn btn-danger btnDelete' data-id='" + list[i].maSP + "'>Delete</a></td > ";
+                            html += "</tr>";
+                        }
+                        $('#data-table').html(html);
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function Delete(id) {
+            $.ajax({
+                url: '/QuanLy/SanPhams/Delete',
+                type: 'POST',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        $('#tr' + id).remove();
+                        GetData();
+                    } else {
+                        console.log("Error!");
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+        function IsValidate() {
+            var check = false;
+            if ($('#MaSP').val() == '') {
+                $('#MaSP').next().html('Mời nhập mã sản phẩm!');
+                check = false; return;
+            } else {
+                $('#MaSP').next().html('');
+                check = true;
+            }
+
+            if ($('#TenSp').val() == '') {
+                $('#TenSp').next().html('Mời nhập tên sản phẩm!');
+                check = false; return;
+            } else {
+                $('#TenSp').next().html('');
+                check = true;
+            }
+            return check;
+        }
+    </script>
+}

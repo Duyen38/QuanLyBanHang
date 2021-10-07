@@ -1,0 +1,326 @@
+﻿@model QuanLy.src.Abstractions.Data.HoaDon
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Thông tin hóa đơn <span>@Html.DisplayFor(model => model.MaHD)</span></h3>
+<hr />
+<div>
+    <div>
+        <div class="container">
+            <dl class="row">
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.KhachHang.MaKH)
+                </dt>
+                <dd class="col col-sm-3">
+                    <a href="@Url.Action("Details", "KhachHangs", new { id = @Model.KhachHang.MaKH })">
+                        @Html.DisplayFor(model => model.KhachHang.MaKH)
+                    </a>
+                </dd>
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.NhanVien.MaNV)
+                </dt>
+                <dd class="col col-sm-3">
+                    <a href="@Url.Action("Details", "NhanViens", new { id = @Model.NhanVien.MaNV })">
+                        @Html.DisplayFor(model => model.NhanVien.MaNV)
+                    </a>
+                </dd>
+            </dl>
+            <dl class="row ">
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.NgayLapHD)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.NgayLapHD)
+                </dd>
+                <dt class="col col-sm-3">
+                    @Html.DisplayNameFor(model => model.NgayNhanHang)
+                </dt>
+                <dd class="col col-sm-3">
+                    @Html.DisplayFor(model => model.NgayNhanHang)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <h5>
+        Chi tiết hóa đơn
+        <span style="text-align:right">
+            @*<a href="@Url.Action("Create", "ChiTietHoaDons" , new { id=@Model.MaHD })"><i class="fas fa-cart-plus"></i></a>*@
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
+                <i class="fas fa-cart-plus"></i> Create
+            </button>
+        </span>
+    </h5>
+    <div>
+        <table class="table ml-5">
+            <thead>
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                @*@foreach (var cthd in Model.ChiTietHoaDons)
+                {
+                    <tr>
+                        <td>
+                            <a asp-area="QuanLy" asp-controller="SanPhams" asp-action="Details" asp-route-id="@cthd.MaSP">
+                                @Html.DisplayFor(modelItem => cthd.MaSP)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => cthd.SoLuong)
+                        </td>
+                        <td>
+                            <a asp-area="QuanLy" asp-controller="ChiTietHoaDons" asp-action="Edit" asp-route-id="@cthd.MaHD" asp-route-maSP="@cthd.MaSP">Edit</a>|
+                            <a asp-area="QuanLy" asp-controller="ChiTietHoaDons" asp-action="Edit" asp-route-id="@cthd.MaHD" asp-route-maSP="@cthd.MaSP">Delete</a>
+                        </td>
+                    </tr>
+                }*@
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-area="QuanLy" asp-action="Index">Back to List</a>
+</div>
+
+<!-- Modal Create -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Thêm sản phẩm vào hóa đơn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form>
+                            <div class="form-group">
+                                <label for="MaHD" class="control-label"> Mã hóa đơn </label>
+                                <input id="MaHD" class="form-control" readonly value="@Model.MaHD"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="MaSP" class="control-label">Mã sản phẩm </label>
+                                <select id="MaSP" class="form-control" asp-items="ViewBag.MaSP">
+                                    <option value="">Chọn sản phẩm</option>
+                                        @foreach( var sp in ViewBag.MaSP)
+                                        {
+                                            <option value="@sp"></option>
+                                        }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="SoLuong" class="control-label"> Số lượng </label>
+                                <input id="SoLuong" class="form-control" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new">Cập nhật thông tin hóa đơn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="MaHD" class="control-label"> Mã hóa đơn </label>
+                                <input id="editMaHD" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="MaSP" class="control-label">Mã sản phẩm </label>
+                                <input id="editMaSP" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="SoLuong" class="control-label"> Số lượng </label>
+                                <input id="editSoLuong" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetData(@Model.MaHD);
+
+            $('#btnSave').click(function () {
+                if (IsValidate()) {
+                    var model = {
+                        "MaHD": $('#MaHD').val(),
+                        "MaSP": $('#MaSP').val(),
+                        "SoLuong": $('#SoLuong').val()
+                    };
+                    $.ajax({
+                        url: '/QuanLy/ChiTietHoaDons/Create',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: model,
+                        success: function (res) {
+                            if (res.success) {
+                                GetData(model.MaHD);
+                            }
+                        },
+                        error: function (xhr) { alert('error'); }
+                    });
+                }
+            });
+            //Edit
+            $('body').on('click', '.btnEdit', function () {
+                var id = $(this).data('id');
+                var sp = $(this).data('sp');
+                console.log("edit clicked " + id + sp);
+                GetDataById(id, sp);
+            });
+
+            //Save info from modal edit/update
+            $('#btnEditSave').click(function () {
+                var model = {
+                    "MaHD": $('#editMaHD').val(),
+                    "MaSP": $('#editMaSP').val(),
+                    "SoLuong": $('#editSoLuong').val()
+                };
+                $.ajax({
+                    url: '/QuanLy/ChiTietHoaDons/Edit',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: model,
+                    success: function (res) {
+                        alert("Cập nhật thành công.");
+                        if (res.success) {
+                            $('#modalEdit').modal('hide');
+                            GetData(model.MaHD);
+                        }
+                    },
+                    error: function (xhr) { alert('error'); }
+                });
+            });
+
+            //Delete
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id');
+                var sp = $(this).data('sp');
+                console.log("btndelete clicked " + id + sp);
+                var conf = confirm('Xác nhận xóa khỏi hóa đơn?');
+                if (conf) {
+                    Delete(id, sp);
+                }
+            });
+        });
+        function GetDataById(id, maSP) {
+            $.ajax({
+                url: '/QuanLy/ChiTietHoaDons/GetDataById',
+                type: 'GET',
+                data: { id: id, maSP: maSP },
+                success: function (res) {
+                    if (res.success) {
+                        if (res.data != null) {
+                            $('#editMaHD').val(res.data.result.maHD);
+                            $('#editMaSP').val(res.data.result.maSP);
+                            $('#editSoLuong').val(res.data.result.soLuong);
+                            $('#modalEdit').modal('show');
+                        }
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        };
+
+        function GetData(id) {
+            $.ajax({
+                url: '/QuanLy/ChiTietHoaDons/GetData/'+id,
+                type: 'GET',
+                success: function (res) {
+                    if (res.totalItem > 0) {
+                        var list = res.data;
+                        var html = "";
+                        for (let i = 0; i < res.totalItem; i++) {
+                            url_sp = "/QuanLy/SanPhams/Details/" + list[i].maSP;
+
+                            html += "<tr id='tr" + list[i].maHD + "'>";
+                            html += "<td><a href='" + url_sp + "'>" + list[i].maSP + "</a></td>";
+                            html += "<td>" + list[i].soLuong + "</td>";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id='" + list[i].maHD + "' data-sp='"+list[i].maSP+"'>Edit</a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maHD + "' data-sp='"+list[i].maSP+"'>Delete</a></td > ";
+                            html += "</tr>";
+                        }
+                        $('#data-table').html(html);
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+
+        function Delete(id, maSP) {
+            $.ajax({
+                url: '/QuanLy/ChiTietHoaDons/Delete',
+                type: 'POST',
+                data: { id: id, maSP: maSP },
+                success: function (res) {
+                    if (res.success) {
+                        alert("Xóa thành công!");
+                        //$('#tr' + id).remove();
+                        GetData();
+                    } else {
+                        console.log("Error!");
+                    }
+                },
+                error: function (xhr) { alert('error'); }
+            });
+        }
+        function IsValidate() {
+            var check = false;
+
+            if ($('#MaSP').val() == '') {
+                $('#MaSP').next().html('Mời nhập mã sán phẩm!');
+                check = false; return;
+            } else {
+                $('#MaSP').next().html('');
+                check = true;
+            }
+
+            if ($('#Soluong').val() == '') {
+                $('#Soluong').next().html('Mời nhập số lượng!');
+                check = false; return;
+            } else {
+                $('#Soluong').next().html('');
+                check = true;
+            }
+            return check;
+        }
+
+    </script>
+}
+    
