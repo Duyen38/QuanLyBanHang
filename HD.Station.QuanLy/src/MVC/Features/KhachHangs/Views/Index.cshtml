@@ -7,9 +7,8 @@
 <h3>Danh sách khách hàng</h3>
 
 <p>
-    @*<a asp-area="QuanLy" asp-action="Create">Create New</a>*@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
-        Create
+        <i class="fas fa-user-plus"></i> Add
     </button>
 </p>
 
@@ -27,28 +26,7 @@
             </th>
         </tr>
     </thead>
-    <tbody id="data-table">
-        @*@foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HoTenKH)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DiaChi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DienThoai)
-                    </td>
-                    <td>
-                        <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaKH">Edit</a> |
-                        <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaKH">Details</a> |
-                        <button class="btn btn-danger" id="btnDeleteItem" value="@item.MaKH">Delete</button>
-
-                    </td>
-                </tr>
-            }*@
-    </tbody>
+    <tbody id="data-table"></tbody>
 </table>
 <hr />
 
@@ -79,12 +57,10 @@
                             <div class="form-group">
                                 <label for="HoTenKH" class="control-label"> Họ Tên </label>
                                 <input type="text" id="HoTenKH" class="form-control" />
-                                @*<span asp-validation-for="HoTenKH" class="text-danger"></span>*@
                             </div>
                             <div class="form-group">
                                 <label for="DienThoai" class="control-label"> Điện thoại </label>
                                 <input id="DienThoai" class="form-control" />
-                                @*<span asp-validation-for="DienThoai" class="text-danger"></span>*@
                             </div>
                         </div>
                     </div>
@@ -248,9 +224,9 @@
                             html += "<td>" + listKH[i].hoTenKH + "</td>";
                             html += "<td>" + listKH[i].diaChi + "</td>";
                             html += "<td>" + listKH[i].dienThoai + "</td>";
-                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + listKH[i].maKH + "'>Edit</a> | " +
-                                "<a href='"+url+"' class='btn btn-info btnDetails' data-id ='" + listKH[i].maKH + "' > Details</a> | " +
-                                    "<a class='btn btn-danger btnDelete' data-id='" + listKH[i].maKH + "'>Delete</a></td > ";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + listKH[i].maKH + "'><i class='fas fa-user-edit'></i></a> | " +
+                                "<a href='" + url + "' class='btn btn-info btnDetails' data-id ='" + listKH[i].maKH + "'><i class='fas fa-address-card'></i></a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + listKH[i].maKH + "'><i class='fas fa-user-minus'></i></a></td> ";
                             html += "</tr>";
                         }
                         $('#data-table').html(html);

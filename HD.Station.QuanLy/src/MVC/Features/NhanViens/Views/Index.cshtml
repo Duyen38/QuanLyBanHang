@@ -16,7 +16,7 @@
 <h3>Danh sách nhân viên</h3>
 <p>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
-        Create
+        <i class="fas fa-user-plus"></i> Add
     </button>
 </p>
 
@@ -42,43 +42,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="data-table">
-        @*@foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HoNV)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenNV)
-                </td>
-                <td>
-                    @if (item.GioiTinh == true)
-                    {
-                        <p>Nữ</p>
-                    }
-                    else
-                    {
-                        <p>Nam</p>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgaySinh)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DiaChi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DienThoai)
-                </td>
-                <td>
-                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaNV">Edit</a> |
-                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaNV">Details</a> |
-                    <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaNV">Delete</a>
-                </td>
-            </tr>
-        }*@
-    </tbody>
+    <tbody id="data-table"></tbody>
 </table>
 
 <!-- Modal Create-->
@@ -324,9 +288,9 @@
                             html += "<td>" + list[i].ngaySinh + "</td>";
                             html += "<td>" + list[i].diaChi + "</td>";
                             html += "<td>" + list[i].dienThoai + "</td>";
-                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maNV + "'>Edit</a> | " +
-                                "<a href='" + urlDetails + "' class='btn btn-info btnDetails' data-id ='" + list[i].maNV + "' > Details</a> | " +
-                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maNV + "'>Delete</a></td > ";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maNV + "'><i class='fas fa-user-edit'></i></a> | " +
+                                "<a href='" + urlDetails + "' class='btn btn-info btnDetails' data-id ='" + list[i].maNV + "'><i class='fas fa-address-card'></i></a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maNV + "'><i class='fas fa-user-minus'></a></td > ";
                             html += "</tr>";
                         }
                         $('#data-table').html(html);

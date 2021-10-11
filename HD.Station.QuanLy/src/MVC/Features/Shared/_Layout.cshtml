@@ -38,7 +38,7 @@
                 </div>
 
                 <form>
-                    <input class="form-control" type="text" name="SearchString" placeholder="Tìm kiếm" aria-label="Search" />
+                    <input class="form-control" type="text" id="txtSearch" name="SearchString" placeholder="Tìm kiếm" aria-label="Search" />
                 </form>
             </div>
         </nav>
@@ -62,6 +62,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     @*<script data-main="/js/conmon" src="/js/require.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txtSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#data-table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });       
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

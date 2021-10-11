@@ -272,8 +272,8 @@
                             html += "<tr id='tr" + list[i].maHD + "'>";
                             html += "<td><a href='" + url_sp + "'>" + list[i].maSP + "</a></td>";
                             html += "<td>" + list[i].soLuong + "</td>";
-                            html += "<td><a class='btn btn-warning btnEdit' data-id='" + list[i].maHD + "' data-sp='"+list[i].maSP+"'>Edit</a> | " +
-                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maHD + "' data-sp='"+list[i].maSP+"'>Delete</a></td > ";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id='" + list[i].maHD + "' data-sp='" + list[i].maSP +"'><i class='fas fa-user-edit'></i></a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maHD + "' data-sp='" + list[i].maSP +"'><i class='fas fa-trash'></i></a></td > ";
                             html += "</tr>";
                         }
                         $('#data-table').html(html);

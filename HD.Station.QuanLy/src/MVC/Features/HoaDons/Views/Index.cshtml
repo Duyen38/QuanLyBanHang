@@ -8,9 +8,10 @@
 <hr />
 <p>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
-        Create
+        <i class="fas fa-plus-square"></i> Create
     </button>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,37 +33,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="data-table">
-        @*@foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaHD)
-                </td>
-                <td>
-                    <a asp-area="QuanLy" asp-action="Details" asp-controller="KhachHangs" asp-route-id="@item.MaKH">
-                        @Html.DisplayFor(modelItem => item.MaKH)
-                    </a>
-                </td>
-                <td>
-                    <a asp-area="QuanLy" asp-action="Details" asp-controller="NhanViens" asp-route-id="@item.MaNV">
-                        @Html.DisplayFor(modelItem => item.MaNV)
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgayLapHD)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgayNhanHang)
-                </td>
-                <td>
-                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaHD">Edit</a> |
-                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaHD">Details</a> |
-                    <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaHD">Delete</a>
-                </td>
-            </tr>
-        }*@
-    </tbody>
+    <tbody id="data-table"></tbody>
 </table>
 
 <!-- Modal Create -->
@@ -137,25 +108,25 @@
                                 <label for="MaKH" class="control-label">Mã khách hàng </label>
                                 <select id="editMaKH" class="form-control" asp-items="ViewBag.MaKH">
                                     @*<option value="">Mã khách hàng</option>
-                                    @foreach (var kh in ViewBag.MaKH)
-                                    {
-                                        <option value="@kh"></option>
-                                    }*@
+                                        @foreach (var kh in ViewBag.MaKH)
+                                        {
+                                            <option value="@kh"></option>
+                                        }*@
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="MaNV" class="control-label"> Mã nhân viên </label>
                                 <select id="editMaNV" class="form-control" asp-items="ViewBag.MaNV">
                                     @*<option value="">Mã nhân viên</option>
-                                    @foreach (var nv in ViewBag.MaNV)
-                                    {
-                                        <option value="@nv"></option>
-                                    }*@
+                                        @foreach (var nv in ViewBag.MaNV)
+                                        {
+                                            <option value="@nv"></option>
+                                        }*@
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="NgayLapHD" class="control-label"> Ngày lập hóa đơn </label>
-                                <input type="date" for="editNgayLapHD" class="form-control"/>
+                                <input type="date" for="editNgayLapHD" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="NgayNhanHang" class="control-label"> Ngày nhận hàng </label>
@@ -284,12 +255,12 @@
                             html += "<tr id='tr" + list[i].maHD + "'>";
                             html += "<td>" + list[i].maHD + "</a></td>";
                             html += "<td><a href='" + url_kh + "'>" + list[i].maKH + "</a></td>";
-                            html += "<td><a href='" + url_nv +"'>" + list[i].maNV + "</a></td>";
+                            html += "<td><a href='" + url_nv + "'>" + list[i].maNV + "</a></td>";
                             html += "<td>" + list[i].ngayLapHD + "</td>";
                             html += "<td>" + list[i].ngayNhanHang + "</td>";
-                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maHD + "'>Edit</a> | " +
-                                "<a href='" + url_hd + "' class='btn btn-info btnDetails' data-id ='" + list[i].maHD + "' > Details</a> | " +
-                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maHD + "'>Delete</a></td > ";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maHD + "'><i class='fas fa-user-edit'></i></a> | " +
+                                "<a href='" + url_hd + "' class='btn btn-info btnDetails' data-id ='" + list[i].maHD + "'><i class='fas fa-info-circle'></i></a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maHD + "'><i class='fas fa-trash'></i></a></td > ";
                             html += "</tr>";
                         }
                         $('#data-table').html(html);
@@ -327,7 +298,7 @@
 
             if ($('#MaKH').val() == '') {
                 $('#MaKH').next().html('Mời nhập mã khách hàng!');
-                check = false; return; 
+                check = false; return;
             } else {
                 $('#MaKH').next().html('');
                 check = true;

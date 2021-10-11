@@ -9,18 +9,19 @@
     <a asp-area="QuanLy" asp-action="ThongKeDSSP">Thống kê danh sách sản phẩm</a>
 </p>
 <div class="row">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
-        Create
-    </button>
-    <p class="col-sm-4" style="text-align:right">
+    <div class="col-md-7">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
+            <i class="fas fa-plus-square"></i> Create
+        </button>
+    </div>    
+    <div class="col-sm-5 text-right">
         Ngày: <span id="datetime"> </span>
         <script>
             var dt = new Date();
             document.getElementById("datetime").innerHTML = dt.toLocaleString();
         </script>
-    </p>
+    </div>
 </div>
-
 
 <table class="table">
     <thead>
@@ -37,27 +38,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="data-table">
-        @*@foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenSp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DonViTinh)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DonGia)
-                </td>
-                <td>
-                    <a asp-area="QuanLy" asp-action="Edit" asp-route-id="@item.MaSP">Edit</a> |
-                    <a asp-area="QuanLy" asp-action="Details" asp-route-id="@item.MaSP">Details</a> |
-                    <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaSP">Delete</a>
-                </td>
-            </tr>
-        }*@
-    </tbody>
+    <tbody id="data-table"></tbody>
 </table>
 
 <!-- Modal create -->
@@ -84,14 +65,12 @@
                                 <div class="form-group">
                                     <label for="DonGia" class="control-label"> Đơn giá </label>
                                     <input id="DonGia" class="form-control" />
-                                    @*<span asp-validation-for="DonGia" class="text-danger"></span>*@
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="TenSp" class="control-label">Tên sản phẩm </label>
                                     <input id="TenSp" class="form-control" />
-                                    @*<span asp-validation-for="TenSp" class="text-danger"></span>*@
                                 </div>
                                 <div class="form-group">
                                     <label for="DonViTinh" class="control-label"> Đơn vị tính </label>
@@ -259,9 +238,9 @@
                             html += "<td>" + list[i].tenSp + "</td>";
                             html += "<td>" + list[i].donGia + "</td>";
                             html += "<td>" + list[i].donViTinh + "</td>";
-                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maSP + "'>Edit</a> | " +
-                                "<a href='"+url+"' class='btn btn-info btnDetails' data-id ='" + list[i].maSP + "' > Details</a> | " +
-                                    "<a class='btn btn-danger btnDelete' data-id='" + list[i].maSP + "'>Delete</a></td > ";
+                            html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maSP + "'><i class='far fa-edit'></i></a> | " +
+                                "<a href='" + url + "' class='btn btn-info btnDetails' data-id ='" + list[i].maSP + "'><i class='fas fa-info-circle'></i></a> | " +
+                                "<a class='btn btn-danger btnDelete' data-id='" + list[i].maSP + "'><i class='fas fa-trash'></i></a></td > ";
                             html += "</tr>";
                         }
                         $('#data-table').html(html);
