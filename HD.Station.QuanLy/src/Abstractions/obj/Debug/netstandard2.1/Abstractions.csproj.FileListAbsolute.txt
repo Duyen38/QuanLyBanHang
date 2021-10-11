@@ -7,3 +7,13 @@ C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\Abstractions\obj\De
 C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\Abstractions\obj\Debug\netstandard2.1\Abstractions.csproj.CoreCompileInputs.cache
 C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\Abstractions\obj\Debug\netstandard2.1\Abstractions.dll
 C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\Abstractions\obj\Debug\netstandard2.1\Abstractions.pdb
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\bin\Debug\netstandard2.1\Abstractions.deps.json
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\bin\Debug\netstandard2.1\Abstractions.dll
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\bin\Debug\netstandard2.1\Abstractions.pdb
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.csproj.AssemblyReference.cache
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.AssemblyInfoInputs.cache
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.AssemblyInfo.cs
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.csproj.CoreCompileInputs.cache
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.dll
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\Abstractions\obj\Debug\netstandard2.1\Abstractions.pdb

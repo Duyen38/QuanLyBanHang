@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody id="data-table">
-        @foreach (var item in Model)
+        @*@foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -61,7 +61,7 @@
                     <a asp-area="QuanLy" asp-action="Delete" asp-route-id="@item.MaHD">Delete</a>
                 </td>
             </tr>
-        }
+        }*@
     </tbody>
 </table>
 
@@ -77,7 +77,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <form>
                             <div class="form-group">
                                 <label for="MaHD" class="control-label"> Mã hóa đơn </label>
@@ -85,26 +85,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="MaKH" class="control-label">Mã khách hàng </label>
-                                <select id="MaKH" class="form-control">
-                                    <option value="">Mã khách hàng</option>
-                                    @foreach(var kh in ViewBag.MaKH){ 
-                                        <option value="@kh"></option>
-                                    }
+                                <select id="MaKH" class="form-control" asp-items="ViewBag.MaKH">
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="MaNV" class="control-label"> Mã nhân viên </label>
-                                <select id="MaNV" class="form-control" >
-                                    <option value="">Mã nhân viên</option>
-                                    @foreach (var nv in ViewBag.MaNV)
-                                    {
-                                        <option value="@nv"></option>
-                                    }
+                                <select id="MaNV" class="form-control" asp-items="ViewBag.MaNV">
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="NgayLapHD" class="control-label"> Ngày lập hóa đơn </label>
-                                <input type="date" for="NgayLapHD" class="form-control" />
+                                <input type="date" id="NgayLapHD" class="form-control" />
                                 @*<input id="NgayLapHD" class="form-control" />*@
                             </div>
                             <div class="form-group">
@@ -144,27 +135,27 @@
                             </div>
                             <div class="form-group">
                                 <label for="MaKH" class="control-label">Mã khách hàng </label>
-                                <select id="editMaKH" class="form-control">
-                                    <option value="">Mã khách hàng</option>
+                                <select id="editMaKH" class="form-control" asp-items="ViewBag.MaKH">
+                                    @*<option value="">Mã khách hàng</option>
                                     @foreach (var kh in ViewBag.MaKH)
                                     {
                                         <option value="@kh"></option>
-                                    }
+                                    }*@
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="MaNV" class="control-label"> Mã nhân viên </label>
-                                <select id="editMaNV" class="form-control">
-                                    <option value="">Mã nhân viên</option>
+                                <select id="editMaNV" class="form-control" asp-items="ViewBag.MaNV">
+                                    @*<option value="">Mã nhân viên</option>
                                     @foreach (var nv in ViewBag.MaNV)
                                     {
                                         <option value="@nv"></option>
-                                    }
+                                    }*@
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="NgayLapHD" class="control-label"> Ngày lập hóa đơn </label>
-                                <input type="date" for="editNgayLapHD" class="form-control" />
+                                <input type="date" for="editNgayLapHD" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label for="NgayNhanHang" class="control-label"> Ngày nhận hàng </label>
@@ -185,7 +176,7 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            //GetData();
+            GetData();
 
             $('#btnSave').click(function () {
                 if (IsValidate()) {
@@ -203,7 +194,9 @@
                         data: model,
                         success: function (res) {
                             if (res.success) {
-                                window.location.reload();
+                                alert("Thêm hóa đơn thành công.");
+                                $('#modalCreate').modal('hide');
+                                GetData();
                             }
                         },
                         error: function (xhr) { alert('error'); }
@@ -226,6 +219,7 @@
                     "NgayLapHD": $('#editNgayLapHD').val(),
                     "NgayNhanHang": $('#editNgayNhanHang').val()
                 };
+                alert(model.MaKH + ' ' + model.MaNV + ' ' + model.NgayLapHD + ' ' + model.NgayNhanHang);
                 $.ajax({
                     url: '/QuanLy/HoaDons/Edit',
                     dataType: 'json',
@@ -234,8 +228,8 @@
                     success: function (res) {
                         alert("Cập nhật thành công.");
                         if (res.success) {
-                            GetData();
                             $('#modalEdit').modal('hide');
+                            GetData();
                         }
                     },
                     error: function (xhr) { alert('error'); }
@@ -280,7 +274,6 @@
                 type: 'GET',
                 success: function (res) {
                     if (res.totalItem > 0) {
-                        alert("Get Data")
                         var list = res.data;
                         var html = "";
                         for (let i = 0; i < res.totalItem; i++) {
@@ -289,8 +282,9 @@
                             url_kh = "/QuanLy/KhachHangs/Details/" + list[i].maKH;
 
                             html += "<tr id='tr" + list[i].maHD + "'>";
-                            html += "<td><a href='" + url_kh + "'>'" + list[i].maKH + "</a></td>";
-                            html += "<td><a href='" + url_nv +"'>'" + list[i].maNV + "</a></td>";
+                            html += "<td>" + list[i].maHD + "</a></td>";
+                            html += "<td><a href='" + url_kh + "'>" + list[i].maKH + "</a></td>";
+                            html += "<td><a href='" + url_nv +"'>" + list[i].maNV + "</a></td>";
                             html += "<td>" + list[i].ngayLapHD + "</td>";
                             html += "<td>" + list[i].ngayNhanHang + "</td>";
                             html += "<td><a class='btn btn-warning btnEdit' data-id ='" + list[i].maHD + "'>Edit</a> | " +
@@ -323,8 +317,6 @@
         }
         function IsValidate() {
             var check = false;
-            debugger;
-
             if ($('#MaHD').val() == '') {
                 $('#MaHD').next().html('Mời nhập mã hóa đơn!');
                 check = false; return;

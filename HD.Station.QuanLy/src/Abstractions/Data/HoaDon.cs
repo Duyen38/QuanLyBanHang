@@ -25,9 +25,11 @@ namespace QuanLy.src.Abstractions.Data
 
 
         [Display(Name = "Ngày lập hóa đơn")]
+        [DataType(DataType.Date)]
         public DateTime? NgayLapHD { get; set; }
 
         [Display(Name = "Ngày nhận hàng")]
+        [DataType(DataType.Date)]
         public DateTime? NgayNhanHang { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

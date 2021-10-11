@@ -18,7 +18,8 @@ namespace MVC.Features.HoaDons
         private readonly IQuanLyKhachHang _quanLyKhachHang;
         private readonly IQuanLyNhanVien _quanLyNhanVien;
         private readonly IQuanLySanPham _quanLySanPham;
-        public HoaDonsController(IQuanLyHoaDon quanLyHoaDon, IQuanLyNhanVien quanLyNhanVien, IQuanLyKhachHang quanLyKhachHang, IQuanLySanPham quanLySanPham)
+        public HoaDonsController(IQuanLyHoaDon quanLyHoaDon, IQuanLyNhanVien quanLyNhanVien, 
+                                IQuanLyKhachHang quanLyKhachHang, IQuanLySanPham quanLySanPham)
         {
             _quanLyHoaDon = quanLyHoaDon;
             _quanLyKhachHang = quanLyKhachHang;
@@ -76,7 +77,6 @@ namespace MVC.Features.HoaDons
 
         // POST: HoaDons/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create( HoaDon hoaDon)
         {
             try
@@ -107,7 +107,7 @@ namespace MVC.Features.HoaDons
             }
             ViewData["MaKH"] = new SelectList(_quanLyKhachHang.GetListCustomerAsync(), "MaKH", "MaKH", hoaDon.MaKH);
             ViewData["MaNV"] = new SelectList(_quanLyNhanVien.GetListEmployeeAsync(), "MaNV", "MaNV", hoaDon.MaNV);
-
+            ViewBag.h = hoaDon;
             return View(hoaDon);
         }
 

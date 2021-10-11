@@ -11,3 +11,16 @@ C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\SqlServer\obj\Debug
 C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\SqlServer\obj\Debug\netstandard2.1\SqlServer.csproj.CopyComplete
 C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\SqlServer\obj\Debug\netstandard2.1\SqlServer.dll
 C:\Users\duyenNH\source\repos\ASP.NET Core\HD.Station.QuanLy\SqlServer\obj\Debug\netstandard2.1\SqlServer.pdb
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\bin\Debug\netstandard2.1\SqlServer.deps.json
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\bin\Debug\netstandard2.1\SqlServer.dll
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\bin\Debug\netstandard2.1\SqlServer.pdb
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\bin\Debug\netstandard2.1\Abstractions.dll
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\bin\Debug\netstandard2.1\Abstractions.pdb
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.csproj.AssemblyReference.cache
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.AssemblyInfoInputs.cache
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.AssemblyInfo.cs
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.csproj.CoreCompileInputs.cache
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.csproj.CopyComplete
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.dll
+C:\Users\duyenNH\source\repos\HD.Station.QuanLy\src\SqlServer\obj\Debug\netstandard2.1\SqlServer.pdb
