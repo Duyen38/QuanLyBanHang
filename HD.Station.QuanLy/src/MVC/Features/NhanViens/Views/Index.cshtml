@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.TenNV)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GioiTinh)
+                @Html.DisplayNameFor(model => model.GioiTinhNV)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NgaySinh)
@@ -68,12 +68,8 @@
                                 <input id="HoNV" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <label for="GioiTinh" class="control-label"> Giới tính </label>
-                                <select class="form-control form-select" id="GioiTinh">
-                                    <option selected>Chọn</option>
-                                    <option value="True">Nữ</option>
-                                    <option value="False">Nam</option>
-                                </select>
+                                <label for="GioiTinhNV" class="control-label"> Giới tính </label>
+                                <select class="form-control form-select" id="GioiTinhNV" asp-items="ViewBag.GioiTinh"></select>
                             </div>
                             <div class="form-group">
                                 <label for="DiaChi" class="control-label"> Địa chỉ </label>
@@ -99,7 +95,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal">Save changes</button>
             </div>
         </div>
     </div>
@@ -128,12 +124,8 @@
                                 <input id="editHoNV" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <label for="GioiTinh" class="control-label"> Giới tính </label>
-                                <select class="form-control form-select" id="editGioiTinh">
-                                    <option selected>Chọn</option>
-                                    <option value="True">Nữ</option>
-                                    <option value="False">Nam</option>
-                                </select>
+                                <label for="GioiTinhNV" class="control-label"> Giới tính </label>
+                                <select class="form-control form-select" id="editGioiTinhNV" asp-items="ViewBag.GioiTinh"></select>
                             </div>
                             <div class="form-group">
                                 <label for="DiaChi" class="control-label"> Địa chỉ </label>
@@ -159,7 +151,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave" data-dismiss="modal">Save changes</button>
             </div>
         </div>
     </div>
@@ -177,7 +169,7 @@
                         "MaNV": $('#MaNV').val(),
                         "HoNV": $('#HoNV').val(),
                         "TenNV": $('#TenNV').val(),
-                        "GioiTinh": $('#GioiTinh').val() == "Nữ" ? true : false,
+                        "GioiTinhNV": $('#GioiTinhNV').val(),
                         "DiaChi": $('#DiaChi').val(),
                         "NgaySinh": $('#NgaySinh').val(),
                         "DienThoai": $('#DienThoai').val()
@@ -191,6 +183,7 @@
                             if (res.success) {
                                 $('#modalCreate').modal('hide');
                                 GetData();
+                                //$('#.modal-backdrop').remove();
                                 //window.location.reload();
                             }
                         },
@@ -211,7 +204,7 @@
                     "MaNV": $('#editMaNV').val(),
                     "HoNV": $('#editHoNV').val(),
                     "TenNV": $('#editTenNV').val(),
-                    "GioiTinh": $('#editGioiTinh').val() == "Nữ" ? false : true,
+                    "GioiTinhNV": $('#editGioiTinhNV').val(),
                     "DiaChi": $('#editDiaChi').val(),
                     "NgaySinh": $('#editNgaySinh').val(),
                     "DienThoai": $('#editDienThoai').val()
@@ -236,7 +229,7 @@
             $('body').on('click', '.btnDelete', function () {
                 var id = $(this).data('id');
                 console.log("delete clicked " + id);
-                var conf = confirm('Xác nhận xóa khách hàng.');
+                var conf = confirm('Xác nhận xóa nhân viên.');
                 if (conf) {
                     Delete(id);
                 }
@@ -251,12 +244,12 @@
                 success: function (res) {
                     if (res.success) {
                         if (res.data != null) {
-                            var gioiTinhNV = res.data.result.gioiTinh == true ? "Nữ" : "Nam";
+                            var gioiTinh = res.data.result.gioiTinhNV == true ? "Nữ" : "Nam";
 
                             $('#editMaNV').val(res.data.result.maNV);
                             $('#editHoNV').val(res.data.result.hoNV);
                             $('#editTenNV').val(res.data.result.tenNV);
-                            $('#editGioiTinh').val(gioiTinhNV);
+                            $('#editGioiTinhNV').val(gioiTinh);
                             $('#editNgaySinh').val(res.data.result.ngaySinh);
                             $('#editDiaChi').val(res.data.result.diaChi);
                             $('#editDienThoai').val(res.data.result.dienThoai);
@@ -279,7 +272,7 @@
                         var html = "";
                         for (let i = 0; i < res.totalItem; i++) {
 
-                            var gt = list[i].gioiTinh == true ? "Nữ" : "Nam";
+                            var gt = list[i].gioiTinhNV == true ? "Nữ" : "Nam";
                             urlDetails = "/QuanLy/NhanViens/Details/" + list[i].maNV;
 
                             html += "<tr id='tr" + list[i].maNV + "'>";
@@ -338,5 +331,7 @@
             }
             return check;
         }
+
+
     </script>
 }

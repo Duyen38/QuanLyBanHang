@@ -67,7 +67,6 @@
                             <div class="form-group">
                                 <label for="NgayLapHD" class="control-label"> Ngày lập hóa đơn </label>
                                 <input type="date" id="NgayLapHD" class="form-control" />
-                                @*<input id="NgayLapHD" class="form-control" />*@
                             </div>
                             <div class="form-group">
                                 <label for="NgayNhanHang" class="control-label"> Ngày nhận hàng </label>
@@ -79,7 +78,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>
@@ -107,21 +106,11 @@
                             <div class="form-group">
                                 <label for="MaKH" class="control-label">Mã khách hàng </label>
                                 <select id="editMaKH" class="form-control" asp-items="ViewBag.MaKH">
-                                    @*<option value="">Mã khách hàng</option>
-                                        @foreach (var kh in ViewBag.MaKH)
-                                        {
-                                            <option value="@kh"></option>
-                                        }*@
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="MaNV" class="control-label"> Mã nhân viên </label>
                                 <select id="editMaNV" class="form-control" asp-items="ViewBag.MaNV">
-                                    @*<option value="">Mã nhân viên</option>
-                                        @foreach (var nv in ViewBag.MaNV)
-                                        {
-                                            <option value="@nv"></option>
-                                        }*@
                                 </select>
                             </div>
                             <div class="form-group">
@@ -138,7 +127,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave" data-dismiss="modal">Save changes</button>
             </div>
         </div>
     </div>

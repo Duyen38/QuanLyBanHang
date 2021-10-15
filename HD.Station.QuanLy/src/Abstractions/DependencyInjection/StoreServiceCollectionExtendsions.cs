@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IStoreBuilder AddManagerBuilder(this IStoreBuilder builder)
         {
             builder.Services.AddScoped<IQuanLyNhanVien, QuanLyNhanVien>();
-
+            builder.Services.AddScoped<IQuanLyGioiTinh, QuanLyGioiTinh>();
             builder.Services.AddScoped<IQuanLyKhachHang, QuanLyKhachHang>();
             builder.Services.AddScoped<IQuanLySanPham, QuanLySanPham>();
             builder.Services.AddScoped<IQuanLyHoaDon, QuanLyHoaDon>();

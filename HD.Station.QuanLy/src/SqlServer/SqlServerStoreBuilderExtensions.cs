@@ -26,6 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddDbContext<DbQuanLyContext>(o => o.UseSqlServer(connectionString)); // config DbContext
                                                                                                    // add store services
             builder.Services.AddScoped<INhanVienStore, QuanLyNhanVienStore>();
+            builder.Services.AddScoped<IGioiTinhStore, GioiTinhStore>();
             builder.Services.AddScoped<IKhachHangStore, QuanLyKhachHangStore>();
             builder.Services.AddScoped<ISanPhamStore, QuanLySanPhamStore>();
             builder.Services.AddScoped<IHoaDonStore, QuanLyHoaDonStore>();

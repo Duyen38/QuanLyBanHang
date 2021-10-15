@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC.Features.NhanViens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,18 +53,6 @@ namespace Demo
                 o.AreaViewLocationFormats.Add("/Features/{1}/Views/{0}.cshtml");
                 o.AreaViewLocationFormats.Add("/Features/{2}/Views/Shared/{0}.cshtml");
                 o.AreaViewLocationFormats.Add("/Features/Shared/{0}.cshtml");
-
-                //o.ViewLocationFormats.Clear();
-
-                //o.ViewLocationFormats.Add("/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
-                //o.ViewLocationFormats.Add("/Views/{0}" + RazorViewEngine.ViewExtension);
-                //o.ViewLocationFormats.Add("/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
-
-                //// Untested. You could remove this if you don't care about areas.
-                //o.AreaViewLocationFormats.Clear();
-                //o.AreaViewLocationFormats.Add("/Features/{2}/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
-                //o.AreaViewLocationFormats.Add("/Areas/{2}/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
-                //o.AreaViewLocationFormats.Add("/Areas/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
             });
         }
 

@@ -32,6 +32,7 @@ namespace QuanLy.SqlServer.Store
             var nhanVien = _dbContext.NhanViens
                             .Where(e => e.MaNV == id)
                             .Include(e => e.HoaDons)
+                            .Include(e => e.GioiTinh)
                             .FirstOrDefault();
             return nhanVien;
         }

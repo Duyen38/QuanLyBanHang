@@ -31,7 +31,8 @@ namespace QuanLy.src.Abstractions.Data
         public string TenNV { get; set; }
 
         [Display(Name = "Giới tính")]
-        public bool? GioiTinh { get; set; }
+        public bool? GioiTinhNV { get; set; }
+        public GioiTinh GioiTinh { get; set; }
 
         [Required]
         [Display(Name = "Ngày sinh")]

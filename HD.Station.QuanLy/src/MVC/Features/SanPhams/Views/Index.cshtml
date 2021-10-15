@@ -60,7 +60,6 @@
                                 <div class="form-group">
                                     <label for="MaSP" class="control-label"> Mã sản phẩm </label>
                                     <input id="MaSP" class="form-control" />
-                                    @*<span asp-validation-for="MaSP" class="text-danger"></span>*@
                                 </div>
                                 <div class="form-group">
                                     <label for="DonGia" class="control-label"> Đơn giá </label>
@@ -75,7 +74,6 @@
                                 <div class="form-group">
                                     <label for="DonViTinh" class="control-label"> Đơn vị tính </label>
                                     <input id="DonViTinh" class="form-control" />
-                                    @*<span asp-validation-for="DonViTinh" class="text-danger"></span>*@
                                 </div>
                             </div>
                         </div>
@@ -84,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal">Save changes</button>
             </div>
         </div>
     </div>
@@ -127,7 +125,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnEditSave">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnEditSave" data-dismiss="modal">Save changes</button>
             </div>
         </div>
     </div>

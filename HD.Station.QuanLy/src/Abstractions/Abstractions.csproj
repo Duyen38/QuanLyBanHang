@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Abstractions\" />
     <Folder Include="DependencyInjection\" />
-    <Folder Include="Store\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
