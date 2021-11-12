@@ -4,7 +4,7 @@ Create a Demo Web Application(CRUD) that is connected with a database in ASP.NET
 
 ## Mvc
 Models, controllers shared views that are included the same FeatureName
-* Features/FeatureName/Models  //classes view models
+* Features/FeatureName/Models  //classes modelViews
 * Features/FeatureName/Views   //razor views
 * Features/FeatureName/Controllers
 
